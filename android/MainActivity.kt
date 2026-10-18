@@ -1,6 +1,6 @@
 package dev.dioxus.main
 
-// Android half of what MPRIS does on desktop (docs/mobile-first-spec.md, 6.4-6.5):
+// Android half of what MPRIS does on desktop:
 //  - asks for the audio and notification permissions,
 //  - keeps playback alive in the background with a foreground service,
 //  - shows it on the lock screen and in the shade through a MediaSession.

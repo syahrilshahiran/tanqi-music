@@ -105,9 +105,7 @@ pub fn start() -> MprisHandle {
 
 /// The D-Bus half, with no app dependency: control requests go to
 /// `sink` rather than straight to a webview. `start` supplies a sink that
-/// forwards to the frontend; `examples/mpris_probe.rs` supplies one that
-/// prints, so the service can be exercised against real `playerctl`
-/// without needing to launch the whole app.
+/// forwards to the frontend; a test can supply one that records instead.
 ///
 /// Only Linux has a backend. Elsewhere this returns a handle whose updates
 /// go nowhere, exactly like a Linux machine with no session bus: playback is

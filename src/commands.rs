@@ -155,7 +155,7 @@ pub fn move_in_playlist(id: i64, position: i64, delta: i64) -> Result<(), String
 
 /// Native file dialogs. Android has none (`rfd` doesn't build there), so the
 /// pickers answer "cancelled", except the folder picker, which offers the
-/// device's Music folder (see docs/mobile-first-spec.md, section 6.4).
+/// device's Music folder.
 #[cfg(not(target_os = "android"))]
 mod dialog {
     use std::path::PathBuf;

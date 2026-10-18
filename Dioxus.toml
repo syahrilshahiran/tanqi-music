@@ -4,7 +4,7 @@
 
 [application]
 # Android only: the permission prompt, foreground playback service and MediaSession
-# (docs/mobile-first-spec.md, 6.4-6.5). dx uses these two files as they are.
+# dx uses these two files as they are.
 android_main_activity = "android/MainActivity.kt"
 android_manifest = "android/AndroidManifest.xml"
 

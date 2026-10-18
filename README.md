@@ -127,7 +127,7 @@ Ollama has no password, so only do this on a network you trust.
 ## Good to know
 
 - **Tempo and key** are read from the middle 90 seconds of a track to keep the work small enough for a phone. The spectrum and loudness use the whole track.
-- **"Usual" is measured, not ideal**: the reference comes from about 900 tracks of the author's own library (rock, soundtracks, K-pop, Malay pop), so the suggested EQ flags what is unusual, not what is wrong. See [the research notes](docs/eq-analysis-research.md).
+- **"Usual" is measured, not ideal**: the reference comes from about 900 tracks of the author's own library (rock, soundtracks, K-pop, Malay pop), so the suggested EQ flags what is unusual, not what is wrong.
 - **Very large files** (a 30-minute lossless mix, say) can run an Android phone out of memory.
 - **Android builds** are debug builds for now (about 120 MB); a signed release build isn't set up.
 - **Windows, macOS and iOS** have never been built or tried.
@@ -159,8 +159,6 @@ Each service sees your IP address, like any website. Answers are remembered on y
 
 | | |
 |---|---|
-| [Design and engineering log](docs/mobile-first-spec.md) | The phone-first layout, the Android work, what was tested |
-| [EQ analysis research](docs/eq-analysis-research.md) | How the audio analysis was checked against primary sources |
 | [Glossary](GLOSSARY.md) | The words the app and code use |
 | [ADR 0001](docs/adr/0001-favorites-and-playlists-refer-to-tracks-by-id.md), [ADR 0002](docs/adr/0002-suggested-eq-is-derived-from-the-stored-spectrum.md) | Architecture decisions |
 

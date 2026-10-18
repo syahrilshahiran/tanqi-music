@@ -1,4 +1,4 @@
-/* Phone layout (docs/mobile-first-spec.md). Loaded after the desktop styles.
+/* Phone layout. Loaded after the desktop styles.
  *
  * New pieces (the tab bar) are written mobile-first: their base rules are the
  * phone's, and a `min-width: 960px` query turns them off. The existing desktop

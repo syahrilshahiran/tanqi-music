@@ -15,9 +15,9 @@ pub const MAX_SUGGESTED_GAIN_DB: f32 = 12.0;
 /// to the same track's own anchor, the mean of its 100 Hz - 5 kHz bands, in the A-weighted power terms
 /// `spectrum::measure` reports. `SPREAD_DB[i]` is the normal range around it: how far individual tracks stray,
 /// 1.5 robust standard deviations wide, so about two thirds of tracks sit inside it. Both were measured
-/// with `examples/reference_probe.rs` over 927 tracks in 59 albums from the author's own library, grouped by
+/// over 927 tracks in 59 albums from the author's own library, grouped by
 /// artist or series (14 groups, so a dozen releases of one soundtrack count once): the reference is the median
-/// over groups, the range the weighted spread of every track around it (see `docs/eq-analysis-research.md`). That library leans towards
+/// over groups, the range the weighted spread of every track around it. That library leans towards
 /// rock, soundtracks, K-pop and Malay pop; it is a reference for "usual", not for "correct".
 const REFERENCE_DB: [f32; 29] = [-50.0, -40.5, -29.1, -20.4, -14.7, -7.1, -4.6, -1.8, -0.3, 1.4, 2.0, 3.1, 3.4, 2.8, 3.5, 4.1, 2.6, 2.0, 1.3, 0.1, -1.5, -2.6, -5.1, -8.9, -12.8, -16.2, -20.0, -26.2, -34.5];
 const SPREAD_DB: [f32; 29] = [12.6, 12.1, 11.4, 13.6, 12.1, 8.5, 8.4, 6.1, 4.6, 4.4, 5.0, 7.3, 6.7, 5.1, 4.8, 4.1, 3.3, 2.9, 3.6, 4.6, 6.2, 5.5, 6.1, 5.2, 5.5, 7.2, 8.5, 10.9, 12.2];
