@@ -1,0 +1,15 @@
+/* Waveform seek bar (elapsed time, bars, total time). */
+.waveform__time { font-size: .75rem; line-height: 1rem; letter-spacing: .01em; font-variant-numeric: tabular-nums; color: var(--color-zinc-500); flex-shrink: 0; width: 2.25rem; }
+:root.dark .waveform__time { color: var(--color-zinc-400); }
+.waveform__time--elapsed { text-align: right; }
+.waveform__track { position: relative; flex: 1 1 0%; min-width: 104px; height: 2rem; overflow: hidden; }
+.waveform__layer { position: absolute; inset: 0; display: flex; align-items: center; gap: 1px; }
+.waveform__layer--unplayed { color: var(--color-zinc-300); }
+:root.dark .waveform__layer--unplayed { color: var(--color-zinc-700); }
+.waveform__layer--played { color: var(--accent); }
+:root.dark .waveform__layer--played { color: var(--accent); }
+.waveform__bar { flex: 1 1 0%; min-width: 1px; background: currentColor; border-radius: 0; }
+.waveform__flat { width: 100%; height: 1px; background: var(--color-zinc-300); }
+:root.dark .waveform__flat { background: var(--color-zinc-700); }
+.waveform__range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; margin: 0; }
+.waveform__range:disabled { cursor: default; }

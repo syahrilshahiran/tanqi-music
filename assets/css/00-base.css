@@ -1,0 +1,214 @@
+/* Tanqi base stylesheet. Concatenated with the other assets/css/*.css files by
+ * build.rs, base first. Colour variables are named by ramp and step (e.g.
+ * `--color-zinc-100`); the app is dark-only (see
+ * assets/boot.js). */
+
+/* Reset. */
+*, *::before, *::after { box-sizing: border-box; border: 0 solid currentColor; margin: 0; padding: 0; }
+html { line-height: 1.5; -webkit-text-size-adjust: 100%; height: 100%; }
+body { min-height: 100%; line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+a { color: inherit; text-decoration: inherit; }
+ol, ul { list-style: none; }
+img, svg, video, canvas { display: block; vertical-align: middle; }
+img, video { max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; background: transparent; }
+button { text-align: inherit; }
+textarea { resize: vertical; }
+table { border-collapse: collapse; }
+pre, code { font-family: inherit; }
+button:disabled { opacity: .5; }
+[hidden] { display: none; }
+:root.dark body { color: var(--color-zinc-100); }
+#main { min-height: 100vh; }
+
+/* Shared primitives - use these before inventing a per-component class. */
+.text-muted-xs { font-size: .75rem; line-height: 1rem; letter-spacing: .08em; color: var(--color-zinc-500); }
+:root.dark .text-muted-xs { color: var(--color-zinc-400); }
+.text-muted-sm { font-size: .875rem; line-height: 1.25rem; color: var(--color-zinc-500); }
+:root.dark .text-muted-sm { color: var(--color-zinc-400); }
+.empty-state { font-size: .875rem; line-height: 1.25rem; color: var(--color-zinc-500); padding: 3rem 0; text-align: center; }
+:root.dark .empty-state { color: var(--color-zinc-400); }
+.section-label { font-size: .75rem; line-height: 1rem; font-weight: 500; color: var(--color-zinc-500); }
+:root.dark .section-label { color: var(--color-zinc-400); }
+.alert-error { border: 1px solid var(--color-red-100); border-radius: 0; background: var(--color-red-50); color: var(--color-red-700); font-size: .875rem; line-height: 1.25rem; padding: .75rem; }
+:root.dark .alert-error { border-color: var(--color-red-900); background: var(--color-red-950); color: var(--color-red-300); }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Full-viewport overlay. `.player-open` (set while the player bar is up) stops it short of the bar. */
+.modal-scrim { position: fixed; inset: 0; z-index: 50; background: rgba(25,23,36,.45); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+/* Small bordered button (the app's default secondary control). */
+.btn { font-size: .8125rem; line-height: 1.25rem; padding: .375rem .75rem; border: 1px solid var(--color-zinc-200); border-radius: 0; }
+.btn:hover { background: var(--color-zinc-100); }
+:root.dark .btn { border-color: var(--color-zinc-700); }
+:root.dark .btn:hover { background: var(--color-zinc-800); }
+/* Inverted primary button. */
+.btn-solid { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem 1rem; background: var(--color-zinc-900); color: var(--color-white); font-size: .875rem; line-height: 1.25rem; font-weight: 500; border-radius: 0; transition: background-color .15s, transform .1s; }
+.btn-solid:hover { background: var(--color-zinc-700); }
+.btn-solid:active { transform: scale(.98); }
+:root.dark .btn-solid { background: var(--color-zinc-100); color: var(--color-zinc-900); }
+/* Three bouncing dots (loading). Markup: span.dots > span*3 */
+.dots { display: inline-flex; gap: .25rem; align-items: center; }
+.dots > span { width: .25rem; height: .25rem; border-radius: 0; background: currentColor; animation: tq-bounce 1s infinite; }
+.dots > span:nth-child(1) { animation-delay: -300ms; }
+.dots > span:nth-child(2) { animation-delay: -150ms; }
+@keyframes tq-bounce { 0%, 100% { transform: translateY(-25%); } 50% { transform: none; } }
+
+/* ---- Theme ---- */
+
+/* The Tanqi device palette: matte black with cool grey ramps, shared with the
+ * mini player (compact-music-widget.css). Component styles name colours by
+ * ramp and step (`zinc`, `red`, `green`, ...), so re-pointing a ramp reskins
+ * everything that uses it at once. Each ramp runs light (50) to dark (950),
+ * though only the steps the styles actually use are defined. The app is
+ * dark-only (assets/boot.js sets `.dark` on <html>); `red` is for errors,
+ * `amber` warnings, `green`/`emerald` success - the accent itself is white. */
+:root {
+  --background: #0f0f10;
+  --foreground: #ececee;
+  --hairline: #2a2a2d;
+  --surface: #161617;
+  --accent: #ececee;
+  --accent-solid: #ececee;
+  --on-accent: #0a0a0a;
+  color-scheme: dark;
+  --color-zinc-100: #ececee;
+  --color-zinc-200: #d6d6d9;
+  --color-zinc-300: #b8b8bd;
+  --color-zinc-400: #9b9ba1;
+  --color-zinc-500: #7c7c82;
+  --color-zinc-600: #66666b;
+  --color-zinc-700: #46464b;
+  --color-zinc-800: #2e2e32;
+  --color-zinc-900: #1c1c1f;
+  --color-zinc-950: #121213;
+
+  --color-red-50: #f9e8ec;
+  --color-red-100: #f3d3db;
+  --color-red-300: #eb6f92;
+  --color-red-400: #e0587f;
+  --color-red-500: #c9506f;
+  --color-red-600: #b4637a;
+  --color-red-700: #b4637a;
+  --color-red-800: #8f4a60;
+  --color-red-900: #4a2234;
+  --color-red-950: #2d1522;
+
+  --color-amber-400: #ea9d34;
+  --color-amber-500: #d98d27;
+  --color-amber-600: #c07f1c;
+  --color-amber-700: #a8680f;
+
+  --color-green-300: #9ccfd8;
+  --color-green-400: #7fbcc6;
+  --color-green-500: #56949f;
+  --color-green-700: #286983;
+
+  --color-emerald-50: #e8f2f3;
+  --color-emerald-100: #cfe4e7;
+  --color-emerald-300: #9ccfd8;
+  --color-emerald-400: #7fbcc6;
+  --color-emerald-500: #56949f;
+  --color-emerald-600: #3f7f8c;
+  --color-emerald-700: #286983;
+  --color-emerald-800: #1f5268;
+  --color-emerald-900: #1d3a4a;
+  --color-emerald-950: #152a36;
+
+
+
+  --color-white: #fffaf3;
+
+  --font-sans: "Geist Sans", "SF Pro Display", "Helvetica Neue", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-serif: "Newsreader", "Lyon Text", "Instrument Serif", "Iowan Old Style", "Charter", "Georgia", "DejaVu Serif", serif;
+  --font-mono: var(--font-jetbrains-mono), "Geist Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Page titles: the one serif voice. */
+main h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.75rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--foreground);
+}
+
+/* Native checkboxes/ranges default to the platform accent (a blue on most
+ * systems) - the one stock colour that survived the theme, since it comes
+ * from the UA rather than any class. */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--accent-solid);
+}
+
+/* Browsers don't give native buttons a pointer cursor by default. Every
+ * clickable control in the app is a real <button>/<select>/checkbox/radio, so
+ * one rule here covers virtually all of them. `:disabled` is excluded so a
+ * disabled control keeps reading as non-interactive, matching the dimmed
+ * `button:disabled` style above. The whole-card clickable <div>s
+ * (`.analyzed-card`) set `cursor: pointer` themselves, since there's no
+ * attribute selector for "has an onClick handler." */
+button:not(:disabled),
+[role="button"]:not(:disabled),
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+
+/* While the player bar is up (Shell in ui/mod.rs sets this class), every modal
+ * scrim stops short of it - the bar sits above them so its transport stays
+ * reachable, and without this a scrim and its own bottom edge would run
+ * underneath it. The 5.25rem matches the bar's own height. */
+.player-open .modal-scrim, .app-shell--player .modal-scrim {
+  /* The dimmed overlay still covers the whole window (no undimmed strip
+   * above the bar); the panel is kept clear of the bar by padding instead:
+   * the bar's 5.25rem, its top edge, and a 1rem gap. */
+  padding-bottom: 7.25rem;
+}
+
+/* Clamp long titles to two lines without needing a plugin. */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Range inputs: a hairline track with a small round thumb. */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  /* The input's own box is the click/drag target; taller than the visible track. */
+  height: 20px;
+}
+input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--color-zinc-200); border-radius: 0; }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  background: var(--accent-solid);
+  border: none;
+  border-radius: 0;
+}
+input[type="range"]::-moz-range-track { height: 2px; background: var(--color-zinc-200); border: none; }
+input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; background: var(--accent-solid); border: none; border-radius: 0; }
+.dark input[type="range"]::-webkit-slider-runnable-track { background: var(--color-zinc-800); }
+.dark input[type="range"]::-webkit-slider-thumb { background: var(--accent-solid); }
+.dark input[type="range"]::-moz-range-track { background: var(--color-zinc-800); }
+.dark input[type="range"]::-moz-range-thumb { background: var(--accent-solid); }
+
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800; font-display: swap; src: url(__JB__) format("woff2"); }
+:root { --font-jetbrains-mono: "JetBrains Mono"; }

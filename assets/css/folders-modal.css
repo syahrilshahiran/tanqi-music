@@ -1,0 +1,22 @@
+/* Library folders popup (src/ui/components/folders_modal.rs). */
+.folders { z-index: 50; }
+.folders__panel { width: 100%; max-width: 34rem; max-height: 85vh; display: flex; flex-direction: column; border: 1px solid var(--hairline); background: var(--surface); box-shadow: 0 8px 30px rgba(0,0,0,.06); }
+.folders__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .75rem 1rem; border-bottom: 1px solid var(--hairline); flex-shrink: 0; }
+.folders__title { font-size: .875rem; font-weight: 600; }
+.folders__body { flex: 1 1 0%; overflow-y: auto; min-height: 4rem; }
+.folders__row { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-bottom: 1px solid var(--hairline); }
+.folders__row-main { flex: 1 1 0%; min-width: 0; }
+.folders__path { font-family: var(--font-mono); font-size: .75rem; line-height: 1.25rem; overflow-wrap: anywhere; }
+.folders__count { font-size: .75rem; color: var(--color-zinc-500); }
+:root.dark .folders__count { color: var(--color-zinc-400); }
+.folders__remove { flex-shrink: 0; min-height: 2.75rem; padding: 0 .5rem; font-size: .8125rem; color: var(--color-zinc-500); }
+.folders__remove:hover, .folders__remove--confirm { color: var(--color-red-600); }
+:root.dark .folders__remove:hover, :root.dark .folders__remove--confirm { color: var(--color-red-300); }
+.folders__here { padding: .75rem 1rem; border-bottom: 1px solid var(--hairline); flex-shrink: 0; }
+.folders__dir { display: block; width: 100%; min-height: 2.75rem; padding: .625rem 1rem; text-align: left; font-size: .875rem; border-bottom: 1px solid var(--hairline); overflow-wrap: anywhere; }
+.folders__dir:hover { background: var(--color-zinc-900); }
+.folders__empty { padding: 1.5rem 1rem; font-size: .875rem; color: var(--color-zinc-500); }
+.folders__note, .folders__error { padding: .5rem 1rem; font-size: .75rem; flex-shrink: 0; }
+.folders__error { color: var(--color-red-300); }
+.folders__foot { display: flex; justify-content: flex-end; gap: .5rem; padding: .75rem 1rem; border-top: 1px solid var(--hairline); flex-shrink: 0; }
+.folders__foot .library__tool-btn { min-height: 2.75rem; }

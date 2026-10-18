@@ -1,0 +1,75 @@
+.lyrics-modal { z-index: 50; }
+.lyrics-modal__panel { width: 100%; max-height: 85vh; display: flex; flex-direction: column; border: 1px solid var(--color-zinc-200); background: var(--color-white); box-shadow: 0 8px 30px rgba(0,0,0,.06); max-width: 32rem; }
+.lyrics-modal__panel--wide { max-width: 56rem; }
+:root.dark .lyrics-modal__panel { border-color: var(--color-zinc-700); background: var(--color-zinc-900); }
+.lyrics-modal__header { padding: .75rem; border-bottom: 1px solid var(--color-zinc-200); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-shrink: 0; }
+:root.dark .lyrics-modal__header { border-color: var(--color-zinc-800); }
+.lyrics-modal__heading { min-width: 0; }
+.lyrics-modal__kicker { font-size: .75rem; line-height: 1rem; letter-spacing: .01em; color: var(--color-zinc-500); }
+:root.dark .lyrics-modal__kicker { color: var(--color-zinc-400); }
+.lyrics-modal__title { font-size: .875rem; line-height: 1.375; font-weight: 500; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+.lyrics-modal__artist { color: var(--color-zinc-500); }
+:root.dark .lyrics-modal__artist { color: var(--color-zinc-400); }
+.lyrics-modal__btn { font-size: .75rem; line-height: 1rem; letter-spacing: .01em; padding: .25rem .5rem; border: 1px solid var(--color-zinc-200); flex-shrink: 0; }
+.lyrics-modal__btn:hover { background: var(--color-zinc-100); }
+:root.dark .lyrics-modal__btn { border-color: var(--color-zinc-800); }
+:root.dark .lyrics-modal__btn:hover { background: var(--color-zinc-800); }
+.lyrics-modal__btn--wide { font-size: inherit; line-height: inherit; padding: .375rem .75rem; }
+.lyrics-modal__btn--compact { font-size: inherit; line-height: inherit; }
+.lyrics-modal__content { flex: 1 1 0%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.lyrics-modal__error { margin: 1rem; }
+.lyrics-modal__columns { flex: 1 1 0%; min-height: 0; display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.lyrics-modal__columns--split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lyrics-modal__columns--split > * + * { border-left: 1px solid var(--color-zinc-200); }
+:root.dark .lyrics-modal__columns--split > * + * { border-color: var(--color-zinc-800); }
+.lyrics-modal__lyrics { position: relative; overflow-y: auto; padding: 1rem; font-size: .875rem; line-height: 1.25rem; }
+.lyrics-modal__analysis { overflow-y: auto; padding: 1rem; font-size: .875rem; line-height: 1.25rem; }
+.lyrics-modal__translate-bar { margin-bottom: .75rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-size: .75rem; line-height: 1rem; letter-spacing: .01em; color: var(--color-zinc-500); }
+:root.dark .lyrics-modal__translate-bar { color: var(--color-zinc-400); }
+.lyrics-modal__lines { display: flex; flex-direction: column; }
+.lyrics-modal__group { padding-left: .625rem; }
+.lyrics-modal__mark { cursor: pointer; border-left: 2px solid var(--color-zinc-300); padding: .125rem 0 .125rem .5rem; }
+.lyrics-modal__mark:hover { background: color-mix(in srgb, var(--color-zinc-100) 60%, transparent); }
+:root.dark .lyrics-modal__mark { border-color: var(--color-zinc-800); }
+:root.dark .lyrics-modal__mark:hover { background: color-mix(in srgb, var(--color-zinc-800) 60%, transparent); }
+.lyrics-modal__mark--active, .lyrics-modal__mark--active:hover { border-color: var(--color-red-600); background: var(--color-zinc-100); }
+:root.dark .lyrics-modal__mark--active, :root.dark .lyrics-modal__mark--active:hover { border-color: var(--color-red-500); background: var(--color-zinc-800); }
+.lyrics-modal__line { line-height: 1.625; }
+.lyrics-modal__num { color: var(--color-zinc-500); font-size: .75rem; line-height: 1rem; letter-spacing: .01em; margin-right: .5rem; user-select: none; }
+:root.dark .lyrics-modal__num { color: var(--color-zinc-400); }
+.lyrics-modal__text--translated { cursor: help; text-decoration-line: underline; text-decoration-style: dotted; text-decoration-color: var(--color-zinc-400); text-underline-offset: 4px; }
+:root.dark .lyrics-modal__text--translated { text-decoration-color: var(--color-zinc-600); }
+.lyrics-modal__tooltip { pointer-events: none; position: absolute; z-index: 20; max-width: 20rem; border: 1px solid var(--color-zinc-200); background: var(--color-white); font-size: .75rem; letter-spacing: .01em; line-height: 1.375; padding: .375rem .5rem; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+:root.dark .lyrics-modal__tooltip { border-color: var(--color-zinc-700); background: var(--color-zinc-900); }
+.lyrics-modal__loading { display: flex; align-items: center; gap: .5rem; color: var(--color-zinc-500); }
+:root.dark .lyrics-modal__loading { color: var(--color-zinc-400); }
+.lyrics-modal__bounce { display: flex; align-items: flex-end; gap: .125rem; flex-shrink: 0; }
+.lyrics-modal__bounce > span { width: .25rem; height: .25rem; background: currentColor; animation: tq-bounce 1s infinite; }
+.lyrics-modal__bounce > span:nth-child(1) { animation-delay: -300ms; }
+.lyrics-modal__bounce > span:nth-child(2) { animation-delay: -150ms; }
+.lyrics-modal__bounce > span:nth-child(3) { animation-delay: 0s; }
+.lyrics-modal__heading-label { margin-bottom: .25rem; }
+.lyrics-modal__heading-label--md { margin-bottom: .375rem; }
+.lyrics-modal__heading-label--lg { margin-bottom: .5rem; }
+.lyrics-modal__vibe { line-height: 1.625; margin-bottom: 1rem; }
+.lyrics-modal__block { margin-bottom: .75rem; }
+.lyrics-modal__block--lg { margin-bottom: 1rem; }
+.lyrics-modal__tags { display: flex; flex-wrap: wrap; gap: .25rem; }
+.lyrics-modal__tag { border: 1px solid var(--color-zinc-200); font-size: .75rem; line-height: 1rem; letter-spacing: .01em; padding: .125rem .5rem; }
+:root.dark .lyrics-modal__tag { border-color: var(--color-zinc-800); }
+.lyrics-modal__none { font-size: .75rem; line-height: 1rem; letter-spacing: .01em; color: var(--color-zinc-500); }
+:root.dark .lyrics-modal__none { color: var(--color-zinc-400); }
+.lyrics-modal__annotations { display: flex; flex-direction: column; gap: .75rem; }
+.lyrics-modal__ann-label { font-size: .75rem; line-height: 1rem; letter-spacing: .01em; color: var(--color-zinc-500); margin-bottom: .125rem; }
+:root.dark .lyrics-modal__ann-label { color: var(--color-zinc-400); }
+.lyrics-modal__ann-text { line-height: 1.625; }
+.lyrics-modal__footer { padding: .75rem; border-top: 1px solid var(--color-zinc-200); display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .75rem; line-height: 1rem; letter-spacing: .01em; color: var(--color-zinc-500); flex-shrink: 0; }
+:root.dark .lyrics-modal__footer { border-color: var(--color-zinc-800); color: var(--color-zinc-400); }
+
+/* The deep dive card before it has been run: a notice and its own button. */
+.lyrics-modal__notice { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; }
+.lyrics-modal__notice .lyrics-modal__vibe { margin-bottom: .5rem; }
+.lyrics-modal__notice .lyrics-modal__none { margin-bottom: 1rem; }
+.lyrics-modal__run { margin-top: .25rem; }
+
+.lyrics-modal__tabs { display: none; }

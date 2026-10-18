@@ -1,0 +1,11 @@
+/* Confirmation popup (src/ui/components/confirm_modal.rs). */
+/* Above the Library tools drawer (80), which stays open underneath it. */
+.confirm { z-index: 90; }
+.confirm__panel { width: 100%; max-width: 26rem; display: flex; flex-direction: column; gap: .75rem; padding: 1.25rem 1.25rem calc(1.25rem + var(--safe-b, 0px)); border: 1px solid var(--hairline); background: var(--surface); box-shadow: 0 8px 30px rgba(0,0,0,.06); }
+.confirm__title { font-size: 1rem; font-weight: 600; line-height: 1.375; }
+.confirm__line { font-size: .875rem; line-height: 1.375; color: var(--color-zinc-500); }
+:root.dark .confirm__line { color: var(--color-zinc-400); }
+.confirm__actions { display: flex; justify-content: flex-end; gap: .5rem; padding-top: .5rem; }
+.confirm__actions .library__tool-btn, .confirm__go { min-height: 2.75rem; justify-content: center; }
+.btn-solid.confirm__go--danger, :root.dark .btn-solid.confirm__go--danger { background: var(--color-red-600); color: #fff; }
+.btn-solid.confirm__go--danger:hover, :root.dark .btn-solid.confirm__go--danger:hover { background: var(--color-red-700); filter: none; }

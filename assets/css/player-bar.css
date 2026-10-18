@@ -1,0 +1,86 @@
+/* PlayerBar: the mini player's device laid flat along the bottom of the window. */
+.player-bar { --fh: 4.25rem; --fw: 2.75rem; position: fixed; bottom: 0; left: 0; right: 0; z-index: 70; border-top: 1px solid #2c2c2f; background: linear-gradient(180deg, #1d1d1f, #121213); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 -10px 24px -12px rgba(0,0,0,.6); }
+.player-bar__row { max-width: 80rem; margin: 0 auto; padding: .5rem 1.5rem; height: 5.25rem; display: flex; align-items: center; gap: .875rem; }
+
+/* the disc: etched rim, cover as the hub; the rim turns while playing */
+.player-bar__disc { position: relative; flex-shrink: 0; width: 4.25rem; height: 4.25rem; border-radius: 50% !important; background: radial-gradient(circle at 50% 36%, #232325 0%, #171718 62%, #101011 100%); box-shadow: 0 0 0 1px #303033, inset 0 2px 6px rgba(0,0,0,.65); }
+.player-bar__etch { position: absolute; inset: 0; width: 100%; height: 100%; animation: cmw-spin 12s linear infinite; animation-play-state: paused; }
+.player-bar--playing .player-bar__etch { animation-play-state: running; }
+.player-bar__hub { position: absolute; left: 50%; top: 50%; width: 60%; height: 60%; transform: translate(-50%, -50%); overflow: hidden; border-radius: 50% !important; background: #070708; box-shadow: 0 0 0 1px #3a3a3e, 0 0 0 .2rem #0b0b0c; }
+.player-bar__hub > * { width: 100%; height: 100%; }
+.player-bar__cover { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9) contrast(1.02); }
+.player-bar__hub .track-thumbnail--placeholder, :root.dark .player-bar__hub .track-thumbnail--placeholder { background: radial-gradient(circle at 50% 40%, #1a1a1c, #09090a); }
+
+.player-bar__display { flex-shrink: 0; width: 12rem; align-self: center; }
+.player-bar__display .dev-display__title { display: block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+.player-bar__keys { flex-shrink: 0; display: grid; grid-template-columns: repeat(4, 2.75rem); gap: .2rem; height: 3.25rem; }
+
+/* the tape strip: waveform with its times, on the black body */
+.player-bar__seek { flex: 1 1 0%; min-width: 0; display: flex; align-items: center; gap: 1rem; }
+.player-bar__seek .waveform__track { height: 1.75rem; }
+.player-bar__seek .waveform__time, :root.dark .player-bar__seek .waveform__time { width: 2.25rem; font-family: var(--font-mono); font-size: .625rem; color: var(--color-zinc-400); }
+.player-bar__seek .waveform__layer--unplayed, :root.dark .player-bar__seek .waveform__layer--unplayed { color: #46464b; }
+.player-bar__seek .waveform__layer--played, :root.dark .player-bar__seek .waveform__layer--played { color: #f1f1f2; }
+.player-bar__seek .waveform__flat, :root.dark .player-bar__seek .waveform__flat { background: #46464b; }
+
+.player-bar__tags { flex-shrink: 0; display: grid; grid-template-columns: repeat(4, auto); gap: .3rem; align-content: center; }
+.player-bar__eq { display: flex; }
+.player-bar__eq .dev-tag { flex: 1; display: grid; place-items: center; }
+/* anchored to the bar itself (it is `position: fixed`), not the tag */
+.player-bar__eq-panel { position: absolute; bottom: 100%; right: 1.5rem; margin-bottom: .75rem; z-index: 50; }
+
+.player-bar__error-wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem .5rem; margin-top: -.25rem; }
+.player-bar__error { border: 1px solid var(--color-red-900); border-radius: 0; background: var(--color-red-950); color: var(--color-red-300); font-size: .75rem; line-height: 1rem; letter-spacing: .01em; padding: .5rem; }
+
+/* Spectrum meter: a small black display like the title window. */
+.player-bar__meter { flex-shrink: 0; width: 7.5rem; height: 3.25rem; background: #000; border: 1px solid var(--line); border-radius: .4rem !important; }
+@media (max-width: 60rem) { .player-bar__meter { display: none; } }
+
+/* Queue popover, same slot as the EQ panel. */
+.player-bar__queue { display: flex; }
+.player-bar__queue > .dev-tag, .player-bar > .dev-tag { flex: 1; display: grid; place-items: center; }
+.dev-tag svg { margin: 0 auto; }
+.queue-panel { position: absolute; bottom: 100%; right: 1.5rem; margin-bottom: .75rem; z-index: 50; width: 24rem; max-width: calc(100vw - 3rem); max-height: 60vh; display: flex; flex-direction: column; background: #000; border: 1px solid var(--line); border-radius: .4rem !important; box-shadow: 0 8px 30px rgba(0,0,0,.4); font-family: var(--font-mono); }
+.queue-panel__head { display: flex; align-items: center; gap: .4rem; padding: .5rem .6rem; border-bottom: 1px solid var(--line); }
+.queue-panel__head .section-label { flex: 1; }
+.queue-panel__note { padding: .35rem .6rem; font-size: .625rem; letter-spacing: .08em; color: var(--color-zinc-400); }
+.queue-panel__list { overflow-y: auto; padding: .25rem 0; }
+.queue-panel__row { display: flex; align-items: center; gap: .35rem; padding: .2rem .6rem; }
+.queue-panel__row:hover { background: #111113; }
+.queue-panel__row--current .queue-panel__title, .queue-panel__row--current .queue-panel__num { color: #fff; font-weight: 700; }
+.queue-panel__num { width: 1.4rem; flex-shrink: 0; font-size: .625rem; color: var(--color-zinc-500); }
+.queue-panel__body { flex: 1; min-width: 0; display: flex; flex-direction: column; text-align: left; }
+.queue-panel__title { font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; color: #d6d6d9; }
+.queue-panel__artist { font-size: .625rem; color: var(--color-zinc-400); }
+.queue-panel__btn { display: grid; place-items: center; width: 1.5rem; height: 1.5rem; flex-shrink: 0; color: var(--color-zinc-400); }
+.queue-panel__btn:hover:not(:disabled) { color: #fff; }
+.queue-panel__btn:disabled { opacity: .25; }
+
+/* Lyrics: the current line on the display, and a panel in the queue's slot. */
+.player-bar__tags { grid-template-columns: repeat(5, auto); }
+.player-bar__lyrics { display: flex; }
+.player-bar__lyrics > .dev-tag { flex: 1; display: grid; place-items: center; }
+.dev-display__lyric { margin-top: .1rem; padding-top: .1rem; border-top: 1px solid #1f1f22; font-size: .625rem; line-height: .9rem; letter-spacing: .02em; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lyrics-panel { position: absolute; bottom: 100%; right: 1.5rem; margin-bottom: .75rem; z-index: 50; width: 26rem; max-width: calc(100vw - 3rem); height: 60vh; display: flex; flex-direction: column; background: #000; border: 1px solid var(--line); border-radius: .4rem !important; box-shadow: 0 8px 30px rgba(0,0,0,.4); font-family: var(--font-mono); }
+.lyrics-panel__head { display: flex; align-items: center; gap: .4rem; padding: .5rem .6rem; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+.lyrics-panel__head .section-label { flex: 1; }
+.lyrics-panel__note { padding: .75rem .9rem; font-size: .6875rem; letter-spacing: .04em; color: var(--color-zinc-400); }
+.lyrics-panel__list { flex: 1; overflow-y: auto; padding: .75rem 1rem 40vh; }
+.lyrics-panel__line { display: block; width: 100%; text-align: left; padding: .5rem 0; font-size: .8125rem; line-height: 1.4; color: var(--color-zinc-500); transition: color .2s; }
+button.lyrics-panel__line:hover { color: var(--color-zinc-200); }
+.lyrics-panel__line--active { color: #fff; font-weight: 700; }
+
+/* A lyric line wider than its box: scroll it into view over the line's own
+ * duration (set as --dur), then hold at the end. */
+.lyric--long.lyric--long { text-overflow: clip; animation: lyric-ticker var(--dur, 4s) linear .6s both; }
+@keyframes lyric-ticker { from { text-indent: 0; } to { text-indent: calc(var(--shift, 0px) * -1); } }
+
+/* English under a lyric line, in the same row (so a click still jumps). */
+.lyrics-panel__trans { display: block; margin-top: .3rem; font-size: .625rem; font-weight: 400; line-height: 1.4; letter-spacing: .03em; color: var(--color-zinc-500); }
+.lyrics-panel__line--active .lyrics-panel__trans { color: var(--color-zinc-300); }
+.lyrics-panel__head .dev-tag { white-space: nowrap; }
+
+/* the display's line when there are no lyrics to follow: quieter than a sung line */
+.lyric--status { opacity: .55; }
+.lyric--status.cmw__lyric--next { opacity: .45; }

@@ -1,0 +1,92 @@
+[package]
+name = "tanqi-music"
+version = "0.1.0"
+description = "探奇 (tanqi) music - local-first music player with EQ analysis and lyrics"
+authors = ["syasha"]
+edition = "2021"
+rust-version = "1.85"
+
+[build-dependencies]
+base64 = "0.22"
+regex = "1"
+
+[features]
+# `dx serve --platform android --no-default-features --features mobile`
+default = ["desktop"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+
+[lib]
+name = "app_lib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "tanqi-music"
+path = "src/main.rs"
+
+[dependencies]
+dioxus = { version = "0.7", features = ["router"] }
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+env_logger = "0.11"
+
+dirs = "5"
+urlencoding = "2"
+
+# storage
+rusqlite = { version = "0.31", features = ["bundled"] }
+
+# networking + feed parsing
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "gzip", "json"] }
+regex = "1"
+once_cell = "1"
+
+# async / time
+tokio = { version = "1", features = ["time", "rt-multi-thread", "macros", "fs", "sync"] }
+chrono = "0.4"
+
+symphonia = { version = "0.5", features = ["aac", "isomp4", "mp3", "wav", "pcm", "flac"] }
+rustfft = "6"
+ebur128 = "0.1"
+stratum-dsp = { version = "1", default-features = false }
+
+# Native dialogs and desktop notifications; Android has neither.
+[target.'cfg(not(target_os = "android"))'.dependencies]
+rfd = "0.15"
+notify-rust = "=4.17.0"
+
+# The AI provider's API key lives in the system keychain where there is one.
+[target.'cfg(target_os = "macos")'.dependencies]
+keyring = { version = "3", default-features = false, features = ["apple-native"] }
+[target.'cfg(target_os = "windows")'.dependencies]
+keyring = { version = "3", default-features = false, features = ["windows-native"] }
+
+# Media keys and now-playing over D-Bus (MPRIS); Linux only.
+[target.'cfg(target_os = "linux")'.dependencies]
+mpris-server = { version = "0.10", features = ["tokio"] }
+keyring = { version = "3", default-features = false, features = ["sync-secret-service", "crypto-rust"] }
+
+[dev-dependencies]
+# Unique temp-file names in tests.
+uuid = { version = "1", features = ["v4"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
+# Debug symbols made the .so ~490 MB and the APK too big for the emulator.
+debug = false
+strip = "debuginfo"
+# Unoptimised, the audio analysis (decoding and FFTs) is many times slower than it needs to be, and a phone feels it.
+opt-level = 3

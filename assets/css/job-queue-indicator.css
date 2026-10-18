@@ -1,0 +1,56 @@
+/* Background job queue chip + expandable list. */
+.jobq { width: 18rem; border: 1px solid var(--color-zinc-200); background: var(--color-white); }
+:root.dark .jobq { border-color: var(--color-zinc-700); background: var(--color-zinc-950); }
+.jobq__head { width: 100%; padding: .375rem .625rem; display: flex; align-items: center; gap: .5rem; text-align: left; }
+.jobq__head:hover { background: var(--color-zinc-100); }
+:root.dark .jobq__head:hover { background: var(--color-zinc-900); }
+.jobq__dot { width: .375rem; height: .375rem; background: var(--color-red-600); flex-shrink: 0; }
+.jobq__dot--done { background: var(--color-green-500); }
+:root.dark .jobq__dot--done { background: var(--color-green-300); }
+.jobq__summary { flex: 1 1 0%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; letter-spacing: .01em; font-weight: 700; }
+.jobq__running-label { flex-shrink: 0; max-width: 7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; letter-spacing: .01em; color: var(--color-zinc-500); }
+:root.dark .jobq__running-label { color: var(--color-zinc-400); }
+.jobq__chevron { flex-shrink: 0; font-size: 10px; letter-spacing: .01em; color: var(--color-zinc-500); }
+:root.dark .jobq__chevron { color: var(--color-zinc-400); }
+.jobq__list { max-height: 16rem; overflow-y: auto; border-top: 1px solid var(--color-zinc-200); }
+:root.dark .jobq__list { border-color: var(--color-zinc-800); }
+.jobq__foot { display: flex; gap: .25rem; padding: .375rem .625rem; border-top: 1px solid var(--color-zinc-200); }
+:root.dark .jobq__foot { border-color: var(--color-zinc-800); }
+.jobq__foot-btn { font-size: 9px; letter-spacing: .01em; font-weight: 700; padding: .25rem .5rem; border: 1px solid var(--color-zinc-200); color: var(--color-zinc-500); }
+:root.dark .jobq__foot-btn { border-color: var(--color-zinc-700); color: var(--color-zinc-400); }
+.jobq__foot-btn--danger:hover { color: var(--color-red-600); }
+:root.dark .jobq__foot-btn--danger:hover { color: var(--color-red-400); }
+.jobq__foot-btn--neutral:hover { background: var(--color-zinc-100); }
+:root.dark .jobq__foot-btn--neutral:hover { background: var(--color-zinc-800); }
+
+.job-row { padding: .5rem .625rem; border-top: 1px solid var(--color-zinc-200); }
+.job-row:first-child { border-top-width: 0; }
+:root.dark .job-row { border-color: var(--color-zinc-800); }
+.job-row__main { display: flex; align-items: center; gap: .5rem; }
+.job-row__dot { width: .375rem; height: .375rem; background: var(--color-red-600); flex-shrink: 0; }
+.job-row__label { flex: 1 1 0%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .75rem; line-height: 1rem; letter-spacing: .01em; }
+.job-row__status { flex-shrink: 0; font-size: 9px; letter-spacing: .01em; font-weight: 700; color: var(--color-zinc-500); }
+:root.dark .job-row__status { color: var(--color-zinc-400); }
+.job-row__status--running { color: var(--color-zinc-900); }
+:root.dark .job-row__status--running { color: var(--color-zinc-100); }
+.job-row__status--failed { color: var(--color-red-600); }
+:root.dark .job-row__status--failed { color: var(--color-red-400); }
+.job-row__status--done { color: var(--color-green-700); }
+:root.dark .job-row__status--done { color: var(--color-green-300); }
+.job-row__cancel { flex-shrink: 0; font-size: 9px; letter-spacing: .01em; font-weight: 700; padding: .125rem .375rem; color: var(--color-zinc-500); }
+.job-row__cancel:hover { color: var(--color-red-600); }
+:root.dark .job-row__cancel { color: var(--color-zinc-400); }
+:root.dark .job-row__cancel:hover { color: var(--color-red-400); }
+.job-row__detail { font-size: 10px; letter-spacing: .01em; color: var(--color-zinc-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: .125rem; padding-left: .125rem; }
+:root.dark .job-row__detail { color: var(--color-zinc-400); }
+.job-row__error { font-size: 10px; letter-spacing: .01em; color: var(--color-red-600); margin-top: .125rem; padding-left: .125rem; }
+:root.dark .job-row__error { color: var(--color-red-400); }
+.job-row__bar { height: .125rem; background: var(--color-zinc-200); margin-top: .375rem; }
+:root.dark .job-row__bar { background: var(--color-zinc-800); }
+.job-row__bar-fill { height: 100%; background: var(--color-red-600); }
+
+/* A job row is a link: it opens the job's result (the same place its notification leads). */
+.job-row--link { cursor: pointer; transition: background-color .15s; }
+.job-row--link:hover { background: var(--color-zinc-900); }
+:root.silver .job-row--link:hover { background: #dcdde1; }
+.job-row--link .job-row__cancel { cursor: pointer; }

@@ -1,0 +1,6 @@
+/* FilterPill (src/ui/components/filter_pill.rs): a text tab; the active one is underlined. */
+.filter-pill { border-radius: 0; outline: none; padding: .5rem 0; margin-bottom: -1px; border-bottom: 1px solid transparent; font-size: .875rem; color: var(--color-zinc-500); transition: color .15s, border-color .15s; }
+.filter-pill:hover { color: var(--color-zinc-900); }
+.filter-pill--active, .filter-pill--active:hover { color: var(--color-zinc-900); border-bottom-color: var(--color-zinc-900); font-weight: 500; }
+:root.dark .filter-pill:hover { color: var(--color-zinc-100); }
+:root.dark .filter-pill--active, :root.dark .filter-pill--active:hover { color: var(--color-zinc-100); border-bottom-color: var(--color-zinc-100); }

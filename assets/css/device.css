@@ -1,0 +1,121 @@
+/* Device parts shared by the mini player and the player bar: tags, keys, the
+ * volume fader and the EQ panel's device skin. */
+/* the little display and its position chip */
+.dev-display {
+  flex: 1 1 0%; min-width: 0; padding: .4rem .55rem .45rem; background: #000; border: 1px solid var(--line);
+  border-radius: .4rem !important; font-family: var(--font-mono);
+}
+.dev-display__title { font-size: .8125rem; line-height: 1.1rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: #fff; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.dev-display__row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: .1rem; }
+.dev-display__artist { min-width: 0; font-size: .6875rem; line-height: 1rem; color: #c9c9cc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dev-chip { flex-shrink: 0; padding: .1rem .3rem; font-size: .625rem; line-height: 1; font-weight: 700; background: #f1f1f2; color: #000; border-radius: .2rem !important; }
+
+/* small tags (pressed = white chip) */
+.dev-tag { padding: .3rem .45rem; font-family: var(--font-mono); font-size: .625rem; line-height: 1; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); border: 1px solid #333337; border-radius: .25rem !important; }
+.dev-tag:hover { color: var(--ink); border-color: #4a4a4f; }
+.dev-tag[aria-pressed="true"] { background: #efeff0; color: #0a0a0a; border-color: #efeff0; }
+
+/* keys */
+.dev-key {
+  display: grid; place-items: center; color: var(--ink); background: linear-gradient(180deg, #202022, #161617);
+  border: 1px solid #2b2b2e; border-top-color: #3a3a3e; border-radius: .3rem !important;
+}
+.dev-key:hover { background: linear-gradient(180deg, #262628, #1b1b1c); }
+.dev-key:active { background: #121213; transform: translateY(1px); }
+.dev-key:disabled { opacity: .3; }
+
+/* The fader: two slim grooves and a hairline cursor across both, as on the
+ * hardware. The grooves fill up to the level. The real control is an
+ * invisible range input laid over it and turned upright, so dragging,
+ * touch and the arrow keys all work natively. */
+.dev-fader { position: relative; flex-shrink: 0; width: var(--fw, 3.25rem); height: var(--fh, 4.5rem); --lvl: .8; }
+.dev-fader__groove { position: absolute; top: .4rem; bottom: .4rem; width: .4rem; border-radius: .2rem !important; background: #060607; box-shadow: inset 0 1px 2px rgba(0,0,0,.9), 0 0 0 1px #232326; }
+.dev-fader__groove--l { left: calc(50% - .775rem); }
+.dev-fader__groove--r { left: calc(50% + .375rem); }
+.dev-fader__groove::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--lvl) * 100%); border-radius: .2rem !important; background: linear-gradient(180deg, #a3a3a9, #6c6c72); opacity: .7; }
+.dev-fader__cursor { position: absolute; left: 0; right: 0; bottom: calc(.4rem + (100% - .8rem) * var(--lvl)); height: 2px; margin-bottom: -1px; background: var(--ink); box-shadow: 0 0 6px rgba(255,255,255,.22); pointer-events: none; }
+.dev-fader:hover .dev-fader__cursor, .dev-fader:focus-within .dev-fader__cursor { background: #fff; box-shadow: 0 0 8px rgba(255,255,255,.4); }
+/* (under .dev-fader so it out-ranks the base `input[type=range]` rules) */
+.dev-fader .dev-fader__range { position: absolute; left: 0; top: var(--fh, 4.5rem); width: var(--fh, 4.5rem); height: var(--fw, 3.25rem); margin: 0; opacity: 0; cursor: ns-resize; transform-origin: left top; transform: rotate(-90deg); }
+.dev-fader .dev-fader .dev-fader__range:focus-visible { outline: none; }
+
+/* The EQ panel, dressed as part of the device. */
+:root.dark .eq .section-label { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+:root.dark .eq__btn, :root.dark .eq__add { border: 1px solid transparent; border-radius: .2rem !important; background: #2a2a2d; color: #d9d9dc; font-family: var(--font-mono); font-size: .625rem; letter-spacing: .12em; text-transform: uppercase; }
+:root.dark .eq__btn:hover, :root.dark .eq__add:hover { background: #3a3a3e; color: #fff; }
+:root.dark .eq__add { border-style: dashed; border-color: #3a3a3e; background: transparent; }
+:root.dark .eq__btn:disabled { opacity: .4; }
+:root.dark .eq__note, :root.dark .eq__toggle, :root.dark .eq-band__pre-label { color: var(--dim); }
+:root.dark .eq__error { color: #e98a96; }
+:root.dark .eq__correction { border-color: #2a2a2d; }
+:root.dark .eq__import-text, :root.dark .eq-band__freq { border: 1px solid var(--line); border-radius: .3rem !important; background: #000; color: #fff; font-family: var(--font-mono); }
+:root.dark .eq-band__gain { color: #fff; }
+:root.dark .eq-band__remove { color: var(--dim); }
+:root.dark .eq-band__remove:hover { color: #fff; }
+/* slider: a dark groove with a light hairline handle, like the volume fader */
+:root.dark .eq input[type="range"]::-webkit-slider-runnable-track { height: 4px; background: #2a2a2d; border-radius: 2px !important; }
+:root.dark .eq input[type="range"]::-webkit-slider-thumb { width: 8px; height: 22px; margin-top: -9px; background: #f1f1f2; border-radius: 1px !important; box-shadow: 0 1px 3px rgba(0,0,0,.6); }
+
+/* The volume knob (VolumeKnob in components/device.rs): ticks round a metal cap that turns to the level. */
+.dev-knob { --knob: 3.75rem; position: relative; flex-shrink: 0; width: var(--knob); height: var(--knob); cursor: grab; user-select: none; touch-action: none; outline: none; }
+.dev-knob__ticks { position: absolute; inset: 0; width: 100%; height: 100%; }
+.dev-knob__tick { stroke: #46464b; stroke-width: 2.4; stroke-linecap: round; }
+.dev-knob__tick--on { stroke: #f1f1f2; }
+.dev-knob__cap { position: absolute; inset: 17%; border-radius: 50% !important; background: radial-gradient(circle at 50% 28%, #34343a, #1a1a1c 70%); box-shadow: 0 0 0 1px #3a3a3e, 0 3px 6px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.14); }
+.dev-knob:hover .dev-knob__cap, .dev-knob:focus-visible .dev-knob__cap { box-shadow: 0 0 0 1px #6a6a70, 0 3px 6px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.2); }
+.dev-knob__pointer { position: absolute; inset: 0; transform: rotate(var(--deg)); pointer-events: none; }
+.dev-knob__pointer::before { content: ""; position: absolute; left: 50%; top: 7%; width: 2px; height: 24%; margin-left: -1px; background: #fff; border-radius: 1px !important; box-shadow: 0 0 6px rgba(255,255,255,.35); }
+.dev-knob__grab { position: fixed; inset: 0; z-index: 300; cursor: grabbing; }
+.cmw__deck .dev-knob { --knob: 3.25rem; }
+
+/* saved headphone corrections */
+.eq__saved { display: flex; flex-direction: column; gap: .375rem; margin-bottom: .5rem; }
+.eq__hp { display: flex; align-items: stretch; gap: .375rem; }
+.eq__hp-pick { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .5rem .6rem; text-align: left; font-family: var(--font-mono); font-size: .6875rem; color: var(--dim); border: 1px solid #333337; border-radius: .25rem !important; }
+.eq__hp-pick:hover { color: var(--ink); border-color: #4a4a4f; }
+.eq__hp-pick[aria-pressed="true"] { background: #efeff0; color: #0a0a0a; border-color: #efeff0; }
+.eq__hp-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.eq__hp-meta { flex-shrink: 0; font-size: .5625rem; letter-spacing: .1em; text-transform: uppercase; opacity: .7; }
+.eq__import-name { width: 100%; padding: .4rem .5rem; border: 1px solid var(--line); border-radius: .3rem !important; background: #000; color: #fff; font-family: var(--font-mono); font-size: .75rem; }
+.dev-display__artist--link { cursor: pointer; }
+.dev-display__artist--link:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* The EQ analysis window's Listen row: icon key, device-style seek groove, EQ chip */
+.aam__eqtag { display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .55rem; }
+.aam__eqtag svg { flex-shrink: 0; }
+.aam__play { width: 2.5rem; height: 2.5rem; flex-shrink: 0; }
+.aam__play:disabled { opacity: .6; }
+.aam__play--busy { animation: tq-blink 1.2s ease-in-out infinite; }
+.aam__player .aam__seek { -webkit-appearance: none; appearance: none; height: 1.25rem; margin: 0; background: transparent; cursor: pointer; }
+.aam__player .aam__seek::-webkit-slider-runnable-track { height: .4rem; border-radius: .2rem; background: linear-gradient(90deg, #a3a3a9 0, #a3a3a9 var(--pct, 0%), #060607 var(--pct, 0%), #060607 100%); box-shadow: inset 0 1px 2px rgba(0,0,0,.9), 0 0 0 1px #232326; }
+.aam__player .aam__seek::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: .5rem; height: 1.1rem; margin-top: -.35rem; border-radius: .15rem; border: 1px solid #0a0a0a; background: #efeff0; box-shadow: 0 0 6px rgba(255,255,255,.22); }
+.aam__player .aam__seek:focus-visible { outline: none; }
+.aam__player .aam__seek:disabled { opacity: .4; cursor: default; }
+.aam__player .aam__time { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .06em; color: var(--dim); width: 2.5rem; }
+
+/* Strength sliders (Suggested EQ strength): the same groove as the seek bar */
+.dev-range { -webkit-appearance: none; appearance: none; flex: 1 1 0%; min-width: 0; height: 1.25rem; margin: 0; background: transparent; cursor: pointer; }
+.dev-range::-webkit-slider-runnable-track { height: .4rem; border-radius: .2rem; background: linear-gradient(90deg, #a3a3a9 0, #a3a3a9 var(--pct, 0%), #060607 var(--pct, 0%), #060607 100%); box-shadow: inset 0 1px 2px rgba(0,0,0,.9), 0 0 0 1px #232326; }
+.dev-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: .5rem; height: 1.1rem; margin-top: -.35rem; border-radius: .15rem; border: 1px solid #0a0a0a; background: #efeff0; box-shadow: 0 0 6px rgba(255,255,255,.22); }
+.dev-range:focus-visible { outline: none; }
+.eq__strength { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+.eq__strength-label { flex-shrink: 0; font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.eq__strength-value { flex-shrink: 0; width: 2.5rem; text-align: right; font-family: var(--font-mono); font-size: .6875rem; color: var(--dim); }
+.aam__note--tight { margin-top: .25rem; margin-bottom: .25rem; }
+
+/* The analysis window's spectrum chart */
+.sc { margin: 0 0 1rem; }
+.sc__svg { display: block; width: 100%; height: auto; }
+.sc__grid { stroke: #232326; stroke-width: 1; }
+.sc__zero { stroke: #5a5a60; stroke-width: 1; }
+.sc__label { fill: #8a8a91; font-family: var(--font-mono); font-size: 8px; }
+.sc__range { fill: rgba(163, 163, 169, .18); stroke: none; }
+.sc__cutoff { fill: rgba(163, 163, 169, .12); }
+.sc__track { fill: none; stroke: #efeff0; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+.sc__eq { fill: none; stroke: #ff7a45; stroke-width: 1.6; stroke-dasharray: 4 3; stroke-linejoin: round; }
+.sc__legend { display: flex; flex-wrap: wrap; gap: .25rem .9rem; margin-top: .25rem; font-family: var(--font-mono); font-size: .5625rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.sc__key { display: inline-flex; align-items: center; gap: .35rem; }
+.sc__key::before { content: ""; width: .9rem; height: 0; border-top: 2px solid #efeff0; }
+.sc__key--range::before { height: .5rem; border-top: 0; background: rgba(163, 163, 169, .35); }
+.sc__key--eq::before { border-top: 2px dashed #ff7a45; }
+.aam__empty { margin: .25rem 0 .75rem; padding: 1.25rem .75rem; text-align: center; font-size: .8125rem; color: var(--dim); border: 1px dashed #2a2a2d; border-radius: .3rem; }

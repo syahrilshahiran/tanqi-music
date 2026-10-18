@@ -1,0 +1,97 @@
+/* Compact (always-on-top) music widget: a small matte-black player.
+ * An object floating on a transparent window: matte black by default, and
+ * reskinned silver by the derived rules in build.rs when `.silver` is set. The app turns every border-radius to 0
+ * with !important, so the round parts here say !important themselves (a class
+ * beats `*` on specificity). */
+.cmw {
+  /* Platter diameter: as wide as the window allows, but never taller than the
+   * space left once the rest of the device (display, tools, seek, keys) is in. */
+  --d: min(calc(100vw - 3.75rem), calc(100vh - 24.45rem), 22rem);
+  --ink: #ececee; --dim: #9b9ba1; --line: #2a2a2d;
+  height: 100vh; display: flex; flex-direction: column; align-items: center; overflow: hidden; padding: .875rem;
+  background: transparent; color: var(--ink); font-family: var(--font-sans); font-size: .75rem; line-height: 1rem;
+}
+/* The window itself is transparent here, so the device floats on the desktop. */
+html:has(.cmw), html:has(.cmw) body, html:has(.cmw) #main { background: transparent !important; }
+
+.cmw__device {
+  position: relative; flex: 1 1 0%; min-height: 0; width: 100%; max-width: 26rem; display: flex; flex-direction: column; gap: .75rem; padding: 1rem;
+  border: 1px solid #2c2c2f; border-radius: .875rem !important; background: linear-gradient(180deg, #1d1d1f, #121213);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 1px 2px rgba(0,0,0,.35), 0 14px 28px -14px rgba(0,0,0,.55);
+}
+
+/* ---- top: model label + the little display ---- */
+.cmw__top { display: flex; align-items: center; gap: .875rem; flex-shrink: 0; }
+.cmw__label { font-size: 1.375rem; line-height: 1; font-weight: 300; letter-spacing: .02em; color: var(--ink); }
+
+/* ---- the platter ---- */
+.cmw__stage { position: relative; flex: 1 1 0%; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.cmw__platter {
+  position: relative; width: var(--d); height: var(--d); max-width: 100%; border-radius: 50% !important;
+  background: radial-gradient(circle at 50% 36%, #232325 0%, #171718 62%, #101011 100%);
+  box-shadow: 0 0 0 1px #303033, inset 0 2px 10px rgba(0,0,0,.65), 0 6px 14px -6px rgba(0,0,0,.7);
+}
+.cmw__etch { position: absolute; inset: 0; width: 100%; height: 100%; animation: cmw-spin 28s linear infinite; animation-play-state: paused; }
+.cmw--playing .cmw__etch { animation-play-state: running; }
+@keyframes cmw-spin { to { transform: rotate(360deg); } }
+.cmw__hub {
+  position: absolute; left: 50%; top: 50%; width: 44%; height: 44%; transform: translate(-50%, -50%); overflow: hidden;
+  border-radius: 50% !important; background: #070708; box-shadow: 0 0 0 1px #3a3a3e, 0 0 0 .45rem #0b0b0c, 0 0 0 calc(.45rem + 1px) #232326;
+}
+.cmw__hub > * { width: 100%; height: 100%; }
+.cmw__cover-img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9) contrast(1.02); }
+.cmw__hub .track-thumbnail--placeholder, :root.dark .cmw__hub .track-thumbnail--placeholder { background: radial-gradient(circle at 50% 40%, #1a1a1c, #09090a); }
+
+.cmw--idle .dev-display__title { color: #8d8d92; }
+.cmw--idle .cmw__etch, .cmw--idle .cmw__mark, .cmw--idle .cmw__marks { opacity: .45; }
+
+/* small etched text on the platter */
+.cmw__mark, .cmw__mark-btn { font-family: var(--font-mono); font-size: clamp(.5rem, calc(var(--d) * .0357), .625rem); line-height: 1; letter-spacing: .14em; text-transform: uppercase; color: #d9d9dc; white-space: nowrap; }
+.cmw__mark { position: absolute; left: 30%; top: 29%; max-width: 38%; line-height: 1.5; white-space: normal; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; text-align: center; transform: translate(-50%, -50%) rotate(-45deg); opacity: .8; }
+.cmw__marks { position: absolute; left: 71%; top: 72%; display: flex; gap: .5rem; transform: translate(-50%, -50%) rotate(-45deg); }
+.cmw__mark-btn { padding: .2rem .35rem; border: 1px solid transparent; border-radius: .2rem !important; opacity: .8; }
+.cmw__mark-btn:hover { opacity: 1; }
+.cmw__mark-btn[aria-pressed="true"] { background: #efeff0; color: #0a0a0a; opacity: 1; }
+
+/* the round grey button: back to the full app */
+.cmw__home { position: absolute; left: 0; bottom: 0; width: 2.125rem; height: 2.125rem; display: grid; place-items: center; border-radius: 50% !important; background: #38383c; color: #d6d6d9; box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+.cmw__home:hover { background: #46464b; color: #fff; }
+.cmw__close { left: auto; right: 0; }
+.cmw__close:hover { background: #7a2e3b; }
+/* minimize: the top-right corner of the stage, away from close */
+.cmw__minimize { left: auto; right: 0; bottom: auto; top: 0; }
+
+/* ---- small controls ---- */
+.cmw__tools { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-shrink: 0; }
+.cmw__group { display: flex; align-items: center; gap: .4rem; }
+
+/* tape strip: the existing waveform, restyled for the black body */
+.cmw__seek { display: flex; align-items: center; gap: .9rem; flex-shrink: 0; }
+.cmw__seek .waveform__track { height: 1.5rem; min-width: 0; }
+/* the dark-theme rules in waveform.css out-rank a plain class, so each
+ * override is repeated under `:root.dark` */
+.cmw__seek .waveform__time, :root.dark .cmw__seek .waveform__time { width: 2rem; font-family: var(--font-mono); font-size: .625rem; color: var(--dim); }
+.cmw__seek .waveform__layer--unplayed, :root.dark .cmw__seek .waveform__layer--unplayed { color: #46464b; }
+.cmw__seek .waveform__layer--played, :root.dark .cmw__seek .waveform__layer--played { color: #f1f1f2; }
+.cmw__seek .waveform__flat, :root.dark .cmw__seek .waveform__flat { background: #46464b; }
+
+/* the deck: keys on the left, the volume fader on the right */
+.cmw__deck { --fh: 4.5rem; --fw: 3.25rem; display: grid; grid-template-columns: minmax(0, 1fr) var(--fw); gap: .5rem; height: var(--fh); flex-shrink: 0; }
+.cmw__keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: .2rem; min-width: 0; }
+/* the EQ panel opens over the device */
+.cmw__scrim { padding: .75rem; background: rgba(0,0,0,.55); }
+.cmw__scrim .cmw__queue { position: static; margin: 0; width: 100%; max-width: none; max-height: 100%; }
+.cmw__scrim .eq { width: 100%; max-height: 100%; overflow-y: auto; }
+
+/* Lyrics: the line on the display, and a view that takes the platter's place. */
+.cmw__lyrics { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; min-height: 0; background: #000; border: 1px solid var(--line); border-radius: .5rem !important; font-family: var(--font-mono); overflow: hidden; }
+.cmw__lyrics .lyrics-panel__list { padding-bottom: 35%; }
+/* The current line on a small OLED strip of its own: black glass in a thin
+ * bezel. The line being sung is bright and wraps to two lines; the next one
+ * is dim and sits at the bottom edge. The strip's height is fixed so the
+ * layout never jumps from line to line. */
+.cmw__lyric-row { flex-shrink: 0; height: 3.6rem; display: flex; flex-direction: column; padding: .4rem .65rem; background: #000; border: 1px solid var(--line); border-radius: .4rem !important; box-shadow: inset 0 1px 6px rgba(0,0,0,.9); font-family: var(--font-mono); overflow: hidden; }
+.cmw__lyric { font-size: .625rem; line-height: .95rem; letter-spacing: .04em; text-transform: uppercase; color: #fff; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; animation: cmw-lyric-in .25s ease-out; }
+.cmw__lyric--next { display: block; margin-top: auto; color: #6a6a70; white-space: nowrap; text-overflow: ellipsis; animation: none; -webkit-line-clamp: unset; }
+.cmw__lyric:empty::before { content: "\00a0"; }
+@keyframes cmw-lyric-in { from { opacity: 0; } to { opacity: 1; } }

@@ -1,0 +1,4 @@
+/* App shell (ui/mod.rs): page column under the nav bar. */
+.app-shell { position: relative; z-index: 10; min-height: 100%; display: flex; flex-direction: column; }
+.app-main { flex: 1 1 0%; width: 100%; max-width: 64rem; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+.app-main--player { padding-bottom: 8.5rem; }

@@ -1,0 +1,26 @@
+/* EQ page (list of analyzed songs). */
+.eq-page__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: .75rem; margin-bottom: .25rem; }
+.eq-page__title { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; }
+.eq-page__intro { margin-bottom: 1rem; }
+.eq-page__error { margin-bottom: 1rem; }
+.eq-page__none { text-align: center; padding: 6rem 0; }
+.eq-page__none-title { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; margin-bottom: .5rem; }
+.eq-page__none-text { color: var(--color-zinc-500); margin-bottom: 1rem; max-width: 24rem; margin-left: auto; margin-right: auto; }
+:root.dark .eq-page__none-text { color: var(--color-zinc-400); }
+.eq-page__filters { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
+.eq-page__field { border: 1px solid var(--color-zinc-200); background-color: var(--color-white); color: var(--color-zinc-900); font-size: .875rem; line-height: 1.25rem; }
+:root.dark .eq-page__field { border-color: var(--color-zinc-800); background-color: var(--color-zinc-900); color: var(--color-zinc-100); }
+.eq-page__search { flex: 1 1 0%; padding: .5rem .75rem; }
+.eq-page__sort { padding: .5rem; flex-shrink: 0; }
+.eq-page__grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: .75rem; }
+@media (min-width: 640px) {
+  .eq-page__filters { flex-direction: row; }
+  .eq-page__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) { .eq-page__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.eq-page__tones { display: flex; flex-wrap: wrap; gap: .375rem; margin: -.25rem 0 1rem; }
+.eq-page__pager { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.25rem 0 .5rem; }
+.eq-page__pager-btn { min-width: 3rem; min-height: 2.5rem; display: grid; place-items: center; }
+.eq-page__pager-btn:disabled { opacity: .35; cursor: default; }
+.eq-page__pager-btn--next svg { transform: scaleX(-1); }
+.eq-page__pager-info { font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); min-width: 6rem; text-align: center; }

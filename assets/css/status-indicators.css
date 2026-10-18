@@ -1,0 +1,3 @@
+/* Floating bottom-right stack of background-job status chips. */
+.status-indicators { position: fixed; right: 1rem; z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; bottom: 1rem; }
+.status-indicators--above-player { bottom: 5rem; }

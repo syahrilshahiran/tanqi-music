@@ -1,0 +1,44 @@
+/* EQ panel: preamp + per-band vertical sliders, headphone correction import. */
+.eq { width: 35rem; max-width: 95vw; border: 1px solid var(--color-zinc-200); background: var(--color-white); box-shadow: 0 8px 30px rgba(0,0,0,.06); padding: .75rem; }
+:root.dark .eq { border-color: var(--color-zinc-700); background: var(--color-zinc-900); }
+.eq__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
+.eq__head--tight { gap: .5rem; margin-bottom: .25rem; }
+.eq__actions { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
+.eq__btn { font-size: 10px; letter-spacing: .01em; padding: .25rem .5rem; border: 1px solid var(--color-zinc-200); }
+.eq__btn:hover { background: var(--color-zinc-100); }
+:root.dark .eq__btn { border-color: var(--color-zinc-800); }
+:root.dark .eq__btn:hover { background: var(--color-zinc-800); }
+.eq__btn--noshrink { flex-shrink: 0; }
+.eq__bands { display: flex; gap: .375rem; overflow-x: auto; padding-bottom: .25rem; }
+.eq__add { width: 2.75rem; height: 5rem; flex-shrink: 0; align-self: flex-end; margin-bottom: 1rem; font-size: .75rem; line-height: 1rem; letter-spacing: .01em; border: 1px dashed var(--color-zinc-300); color: var(--color-zinc-500); }
+.eq__add:hover { background: var(--color-zinc-100); }
+:root.dark .eq__add { border-color: var(--color-zinc-700); color: var(--color-zinc-400); }
+:root.dark .eq__add:hover { background: var(--color-zinc-800); }
+.eq__note { font-size: 10px; letter-spacing: .01em; color: var(--color-zinc-500); }
+:root.dark .eq__note { color: var(--color-zinc-400); }
+.eq__note--spaced { margin-top: .5rem; }
+.eq__error { font-size: 10px; letter-spacing: .01em; color: var(--color-red-600); }
+:root.dark .eq__error { color: var(--color-red-400); }
+.eq__correction { padding-top: .5rem; margin-top: .5rem; border-top: 1px solid var(--color-zinc-200); }
+:root.dark .eq__correction { border-color: var(--color-zinc-800); }
+.eq__import { display: flex; flex-direction: column; gap: .375rem; }
+.eq__import-text { width: 100%; border: 1px solid var(--color-zinc-200); background: var(--color-white); color: var(--color-zinc-900); padding: .375rem .5rem; font-size: 11px; letter-spacing: .01em; font-family: var(--font-mono); }
+:root.dark .eq__import-text { border-color: var(--color-zinc-700); background: var(--color-zinc-900); color: var(--color-zinc-100); }
+.eq__row { display: flex; align-items: center; gap: .5rem; }
+.eq__row--spread { justify-content: space-between; }
+.eq__toggle { display: flex; align-items: center; gap: .375rem; font-size: .75rem; line-height: 1rem; letter-spacing: .01em; color: var(--color-zinc-600); user-select: none; cursor: pointer; }
+:root.dark .eq__toggle { color: var(--color-zinc-300); }
+
+/* One slider column (preamp or a band). */
+.eq-band { display: flex; flex-direction: column; align-items: center; gap: .25rem; width: 2.75rem; flex-shrink: 0; }
+.eq-band__freq { width: 100%; font-size: 9px; letter-spacing: .01em; text-align: center; border: 1px solid var(--color-zinc-200); background: var(--color-white); padding: .125rem; }
+:root.dark .eq-band__freq { border-color: var(--color-zinc-700); background: var(--color-zinc-900); }
+.eq-band__pre-label { font-size: 9px; letter-spacing: .01em; color: var(--color-zinc-500); white-space: nowrap; }
+:root.dark .eq-band__pre-label { color: var(--color-zinc-400); }
+.eq-band__track { height: 5rem; width: 2.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.eq-band__gain { font-size: 10px; letter-spacing: .01em; font-variant-numeric: tabular-nums; color: var(--color-zinc-600); width: 100%; text-align: center; }
+:root.dark .eq-band__gain { color: var(--color-zinc-300); }
+.eq-band__remove { font-size: .75rem; letter-spacing: .01em; color: var(--color-zinc-500); line-height: 1; }
+.eq-band__remove:hover { color: var(--color-red-600); }
+:root.dark .eq-band__remove { color: var(--color-zinc-400); }
+:root.dark .eq-band__remove:hover { color: var(--color-red-400); }

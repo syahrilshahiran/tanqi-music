@@ -1,0 +1,468 @@
+/* Device finish, loaded last: softly rounded corners everywhere, quiet focus
+ * rings, and a calm default for anything that kept an older rule. */
+
+*, *::before, *::after { border-radius: .25rem !important; }
+/* Focus rings only on fields; buttons show their own hover/active state, and a
+ * ring left on a clicked tab or button just looks like a stray box. */
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--color-zinc-400); outline-offset: 2px; }
+button:focus, button:focus-visible { outline: none; }
+
+main h1 { margin-bottom: .75rem; }
+
+/* Native controls: flat, hairline, no platform chrome. */
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--surface);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%23787774' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  border: 1px solid var(--hairline);
+  padding: .5rem 2rem .5rem .75rem;
+  font-size: .875rem;
+  color: var(--foreground);
+}
+input[type="text"], input[type="search"], input:not([type]), textarea {
+  background-color: var(--surface);
+  border: 1px solid var(--hairline);
+  color: var(--foreground);
+}
+input::placeholder, textarea::placeholder { color: var(--color-zinc-400); }
+
+/* Floating panels and cards: hairline border, whisper-quiet shadow. */
+.song-info__panel, .aam, .lyrics-modal__panel, .eq, .onboarding__dialog, .artwork-modal__img, .analyzed-card,
+.job-queue-indicator, .toggle-row {
+  border-radius: 0;
+}
+.song-info__panel, .aam, .lyrics-modal__panel, .eq, .onboarding__dialog { background: var(--surface); border-color: var(--hairline); box-shadow: 0 8px 30px rgba(0,0,0,.06); }
+.analyzed-card { border-color: var(--hairline); background: var(--surface); }
+.analyzed-card:hover { border-color: var(--color-zinc-300); }
+
+/* Small imagery. */
+.track-thumbnail--placeholder { border-radius: 0; }
+.song-info__thumb, .analyzed-card__thumb { border-radius: 0; }
+
+/* Round controls stay round. */
+.toggle, .toggle__knob, .dots > span { border-radius: 0; }
+.toggle-row { border-radius: 0; }
+
+/* Tags and status badges: small pills with tracked caps are the one place
+ * the old uppercase survives. */
+.tag { border-radius: 0; font-size: .6875rem; letter-spacing: .05em; text-transform: uppercase; padding: .125rem .5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0ms !important; transition-duration: .001ms !important; }
+}
+
+/* Room for the dropdown chevron where a component rule set its own padding. */
+select.settings__select, select.eq-page__sort { padding-right: 2rem; }
+
+/* ---- Rose Pine accent (iris) ----
+ * Primary fills and the active state of tabs, nav links and toggles. Written
+ * with both the plain and `:root.dark` selector because the component rules
+ * they override come in light/dark pairs. */
+.btn-solid,
+.library__row-play,
+.onboarding__continue,
+:root.dark .btn-solid,
+:root.dark .library__row-play,
+:root.dark .onboarding__continue,
+.btn-solid:hover,
+.library__row-play:hover,
+:root.dark .btn-solid:hover,
+:root.dark .library__row-play:hover {
+  background: var(--accent-solid);
+  color: var(--on-accent);
+}
+.btn-solid:hover,
+.library__row-play:hover { filter: brightness(1.1); }
+
+:root .navbar__link--active, :root.dark .navbar__link--active { color: var(--accent); }
+:root .filter-pill--active, :root .filter-pill--active:hover,
+:root.dark .filter-pill--active, :root.dark .filter-pill--active:hover { color: var(--accent); border-bottom-color: var(--accent); }
+:root .toggle--on, :root.dark .toggle--on { background: var(--accent-solid); border-color: var(--accent-solid); }
+:root .toggle--on .toggle__knob, :root.dark .toggle--on .toggle__knob { background: var(--on-accent); }
+:root .library__row--current .library__row-title, :root .library__row--current .library__row-num { color: var(--accent); }
+:root.dark .library__row--current .library__row-title, :root.dark .library__row--current .library__row-num { color: var(--accent); }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline-color: var(--accent); }
+.library__search:focus { border-color: var(--accent); }
+
+/* ---- The device look (shared with the mini player) ---- */
+:root.dark main h1, :root.dark .settings__title { font-family: var(--font-sans); font-weight: 300 !important; letter-spacing: .01em; }
+:root.dark .section-label, :root.dark .settings__label { font-family: var(--font-mono); font-size: .6875rem; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-400); }
+
+:root.dark .navbar { background: linear-gradient(180deg, #1d1d1f, #121213); border-bottom-color: #2c2c2f; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+:root.dark .navbar__brand { font-family: var(--font-sans); font-size: 1.375rem; font-weight: 300; letter-spacing: .02em; }
+:root.dark .navbar__link, :root.dark .navbar__mini { font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase; }
+:root.dark .navbar__link--active { background: #f1f1f2; color: #0a0a0a; font-weight: 500; }
+:root.dark .navbar__link--active:hover { background: #f1f1f2; color: #0a0a0a; }
+:root.dark .navbar__mini { border-color: #3a3a3e; }
+
+:root.dark .btn, :root.dark .eq__btn, :root.dark .library__tool-btn { font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .12em; text-transform: uppercase; }
+
+/* Tabs are small keys: mono caps, the active one pressed in as a white chip. */
+:root.dark .filter-pill { padding: .4rem .65rem; margin: 0 .25rem .5rem 0; font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-400); background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; }
+:root.dark .filter-pill:hover { color: var(--color-zinc-100); background: linear-gradient(180deg, #262628, #1b1b1c); }
+:root.dark .filter-pill--active, :root.dark .filter-pill--active:hover { background: #f1f1f2; color: #0a0a0a; border-color: #f1f1f2; font-weight: 500; }
+
+/* Nav links are the same keys as the tabs. */
+:root.dark .navbar__nav { gap: .5rem; }
+:root.dark .navbar__link, :root.dark .navbar__mini { padding: .4rem .65rem; color: var(--color-zinc-400); background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; }
+:root.dark .navbar__link:hover, :root.dark .navbar__mini:hover { color: var(--color-zinc-100); background: linear-gradient(180deg, #262628, #1b1b1c); }
+:root.dark .navbar__link--active, :root.dark .navbar__link--active:hover { background: #f1f1f2; color: #0a0a0a; border-color: #f1f1f2; font-weight: 500; }
+
+/* Settings: each section is a small device panel. */
+:root.dark .settings { max-width: 34rem; }
+:root.dark .settings__sections > .toggle-row, :root.dark .settings__sections > .data-row, :root.dark .settings__sections > div:not(.toggle-row):not(.data-row):not(.danger-zone) { padding: 1rem; border: 1px solid #2c2c2f; border-radius: .875rem !important; background: linear-gradient(180deg, #1d1d1f, #121213); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 10px 20px -14px rgba(0,0,0,.6); }
+:root.dark .settings__sections > * + * { margin-top: .875rem; }
+:root.dark .toggle-row__label { font-family: var(--font-mono); font-size: .6875rem; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-100); margin-bottom: .25rem; }
+:root.dark .toggle-row__desc, :root.dark .settings__hint, :root.dark .data-row__note { color: var(--color-zinc-400); }
+:root.dark .settings__label { margin-bottom: .375rem; color: var(--color-zinc-100); }
+:root.dark .settings__model { display: inline-block; padding: .35rem .6rem; margin-bottom: .75rem; background: #000; border: 1px solid var(--hairline); border-radius: .4rem !important; color: #fff; }
+:root.dark .settings__status { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Buttons are the same small tags as everywhere else. */
+:root.dark .settings__test, :root.dark .data-row__delete { padding: .4rem .65rem; font-family: var(--font-mono); font-size: .625rem; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-300); background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; }
+:root.dark .settings__test:hover { color: #fff; background: linear-gradient(180deg, #262628, #1b1b1c); }
+:root.dark .data-row__delete:hover { color: #e98a96; background: linear-gradient(180deg, #262628, #1b1b1c); }
+:root.dark .data-row__delete--confirm, :root.dark .data-row__delete--confirm:hover { background: #7a2e3b; border-color: #7a2e3b; color: #fff; }
+:root.dark .settings__select { background-color: #000; border: 1px solid var(--hairline); border-radius: .4rem !important; color: #fff; font-size: .75rem; }
+
+/* The switch is a recessed groove with a light hairline handle, like the fader. */
+:root.dark .toggle { width: 2.75rem; height: 1.5rem; background: #060607; border: 1px solid #232326; border-radius: .75rem !important; box-shadow: inset 0 1px 3px rgba(0,0,0,.9); }
+:root.dark .toggle__knob { top: .1875rem; left: .1875rem; width: .75rem; height: 1rem; background: #7c7c82; border-radius: .2rem !important; }
+:root.dark .toggle--on { background: #060607; border-color: #3a3a3e; }
+:root.dark .toggle--on .toggle__knob { background: #f1f1f2; box-shadow: 0 0 6px rgba(255,255,255,.3); transform: translateX(1.25rem); }
+:root.dark .settings__model { margin-right: .5rem; }
+:root.dark .settings__test { margin-bottom: 0; }
+
+/* EQ page: analyzed songs are small device panels. */
+:root.dark .eq-page__title { font-family: var(--font-sans); font-weight: 300; }
+:root.dark .eq-page__field { background-color: #000; border: 1px solid var(--hairline); border-radius: .4rem !important; color: #fff; font-size: .75rem; }
+:root.dark .analyzed-card { border: 1px solid #2c2c2f; border-radius: .75rem !important; background: linear-gradient(180deg, #1d1d1f, #121213); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 8px 16px -12px rgba(0,0,0,.6); }
+:root.dark .analyzed-card:hover { border-color: #46464b; background: linear-gradient(180deg, #232325, #161617); }
+:root.dark .analyzed-card__thumb { border-radius: .4rem !important; box-shadow: 0 0 0 1px #2c2c2f; }
+:root.dark .analyzed-card__title { font-family: var(--font-mono); font-size: .75rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: #fff; }
+:root.dark .analyzed-card__artist, :root.dark .analyzed-card__summary, :root.dark .analyzed-card__vibe { font-family: var(--font-mono); font-size: .6875rem; color: var(--color-zinc-300); }
+:root.dark .analyzed-card__time { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-500); }
+
+:root.dark .btn-solid { font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Background local-file analysis status, as tags. */
+:root.dark .local-analysis__pill, :root.dark .local-analysis__result, :root.dark .local-analysis__dismiss { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .12em; text-transform: uppercase; border-radius: .25rem !important; background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; color: var(--color-zinc-300); }
+:root.dark .local-analysis__result--ready { color: var(--color-emerald-300); border-color: var(--color-emerald-700); }
+:root.dark .local-analysis__result--error { color: var(--color-red-300); border-color: var(--color-red-800); }
+
+/* Library: the browser is a shelf of device parts. */
+:root.dark .library__tool-btn { padding: .4rem .65rem; font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-300); background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; }
+:root.dark .library__tool-btn:hover { color: #fff; background: linear-gradient(180deg, #262628, #1b1b1c); }
+:root.dark .library__search { background: #000; border: 1px solid var(--hairline); border-radius: .4rem !important; color: #fff; }
+:root.dark .library__search:focus { border-color: var(--color-zinc-500); }
+:root.dark .library__folders { border: 1px solid #2c2c2f; border-radius: .75rem !important; background: linear-gradient(180deg, #1d1d1f, #121213); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+:root.dark .library__empty-title, :root.dark .library__hero-title { font-family: var(--font-sans); font-weight: 300; letter-spacing: .01em; }
+:root.dark .library__import-ok { font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .08em; }
+
+/* covers: rounded with a hairline, like the platter's hub */
+:root.dark .library__card-img, :root.dark .library__hero-img, :root.dark .library__album-thumb { border: 1px solid #2c2c2f; border-radius: .6rem !important; box-shadow: 0 8px 16px -12px rgba(0,0,0,.8); }
+:root.dark .library__card:hover .library__card-img { border-color: #5a5a60; box-shadow: 0 10px 20px -12px rgba(0,0,0,.9); }
+:root.dark .library__card-title { font-family: var(--font-mono); font-size: .75rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: #fff; }
+:root.dark .library__card-sub { font-family: var(--font-mono); font-size: .6875rem; }
+
+/* artist / album pages */
+:root.dark .library__back { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; }
+:root.dark .library__album-link { font-family: var(--font-sans); font-size: 1.125rem; font-weight: 300; letter-spacing: .01em; }
+:root.dark .library__disc { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; }
+
+/* track rows: the playing one gets the display's white edge */
+:root.dark .library__row { border-bottom-color: #232326; border-radius: 0 !important; }
+:root.dark .library__row:hover { background: #17171a; }
+:root.dark .library__row--current { background: #1c1c1f; box-shadow: inset 2px 0 0 #f1f1f2; }
+:root.dark .library__row-title { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .03em; text-transform: uppercase; }
+:root.dark .library__row--current .library__row-title { font-weight: 700; color: #fff; }
+:root.dark .library__row-sub { font-family: var(--font-mono); font-size: .6875rem; }
+:root.dark .library__row-play { width: 2rem; height: 1.75rem; background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; border-radius: .3rem !important; color: #fff; }
+:root.dark .library__row-play:hover { background: linear-gradient(180deg, #2a2a2c, #1f1f21); }
+:root.dark .library__row-info:hover { color: #fff; }
+
+/* Popups: device panels over a dark scrim. */
+:root.dark .modal-scrim { background: rgba(0,0,0,.62); }
+:root.dark .song-info__panel, :root.dark .lyrics-modal__panel, :root.dark .aam, :root.dark .onboarding__dialog, :root.dark .jobq { border: 1px solid #2c2c2f; border-radius: .875rem !important; background: linear-gradient(180deg, #1d1d1f, #121213); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 18px 36px -12px rgba(0,0,0,.75); overflow: hidden; }
+:root.dark .jobq { border-radius: .6rem !important; }
+:root.dark .song-info__header, :root.dark .song-info__footer, :root.dark .lyrics-modal__header, :root.dark .lyrics-modal__footer, :root.dark .aam__head, :root.dark .aam__foot, :root.dark .aam__listen, :root.dark .lyrics-modal__columns--split > * + *, :root.dark .jobq__list, :root.dark .jobq__foot, :root.dark .job-row { border-color: #2a2a2d; }
+
+/* little caps labels */
+:root.dark .song-info__kicker, :root.dark .lyrics-modal__kicker, :root.dark .aam__eyebrow, :root.dark .lyrics-modal__ann-label, :root.dark .eq-slider__label, :root.dark .lyrics-modal__translate-bar { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-400); }
+/* titles, like the display */
+:root.dark .song-info__title, :root.dark .lyrics-modal__title, :root.dark .aam__title, :root.dark .onboarding__title { font-family: var(--font-mono); font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: #fff; font-size: .8125rem; }
+:root.dark .lyrics-modal__artist, :root.dark .aam__artist { font-family: var(--font-mono); font-size: .6875rem; text-transform: none; font-weight: 400; letter-spacing: 0; }
+:root.dark .song-info__label, :root.dark .song-info__note, :root.dark .aam__note, :root.dark .aam__loading, :root.dark .lyrics-modal__none, :root.dark .lyrics-modal__loading { font-size: .75rem; }
+:root.dark .song-info__thumb { border-radius: .5rem !important; box-shadow: 0 0 0 1px #2c2c2f; }
+:root.dark .onboarding__lead { font-size: .8125rem; }
+
+/* buttons: the same keys */
+:root.dark .song-info__btn, :root.dark .song-info__footer-btn, :root.dark .lyrics-modal__btn, :root.dark .aam__btn, :root.dark .artwork-modal__size, :root.dark .artwork-modal__download, :root.dark .artwork-modal__close, :root.dark .jobq__foot-btn, :root.dark .onboarding__continue {
+  font-family: var(--font-mono); font-size: .625rem; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-200);
+  background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; border-radius: .3rem !important;
+}
+:root.dark .song-info__btn:hover, :root.dark .song-info__footer-btn:hover, :root.dark .lyrics-modal__btn:hover, :root.dark .aam__btn:hover, :root.dark .artwork-modal__size:hover, :root.dark .artwork-modal__download:hover, :root.dark .artwork-modal__close:hover, :root.dark .jobq__foot-btn--neutral:hover, :root.dark .onboarding__continue:hover { color: #fff; background: linear-gradient(180deg, #262628, #1b1b1c); }
+:root.dark .jobq__foot-btn--danger:hover { color: #e98a96; background: linear-gradient(180deg, #262628, #1b1b1c); }
+:root.dark .artwork-modal__size--selected, :root.dark .artwork-modal__size--selected:hover, :root.dark .onboarding__continue { background: #f1f1f2; border-color: #f1f1f2; color: #0a0a0a; }
+:root.dark .onboarding__continue:hover { background: #fff; color: #0a0a0a; }
+
+/* tags and chips */
+:root.dark .song-info__tag, :root.dark .lyrics-modal__tag, :root.dark .aam__chip { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .12em; text-transform: uppercase; color: var(--color-zinc-300); border: 1px solid #333337; border-radius: .25rem !important; }
+
+/* lyrics: annotation marks, tooltip, band readouts */
+:root.dark .lyrics-modal__mark { border-left-color: #2e2e32; }
+:root.dark .lyrics-modal__mark--active, :root.dark .lyrics-modal__mark--active:hover { border-left-color: #f1f1f2; background: #1c1c1f; }
+:root.dark .lyrics-modal__tooltip { background: #000; border: 1px solid #2c2c2f; border-radius: .4rem !important; font-family: var(--font-mono); color: #fff; }
+:root.dark .eq-slider__track { background: #060607; box-shadow: inset 0 1px 2px rgba(0,0,0,.9), 0 0 0 1px #232326; border-radius: .2rem !important; }
+:root.dark .eq-slider__fill--boost, :root.dark .eq-slider__fill--cut { background: linear-gradient(180deg, #a3a3a9, #6c6c72); }
+:root.dark .eq-slider__value { font-family: var(--font-mono); color: #fff; }
+
+/* artwork viewer and job queue */
+:root.dark .artwork-modal__img { border: 1px solid #2c2c2f; border-radius: .75rem !important; box-shadow: 0 18px 36px -12px rgba(0,0,0,.8); }
+:root.dark .jobq__summary, :root.dark .jobq__running-label, :root.dark .jobq__chevron, :root.dark .job-row__label, :root.dark .job-row__status, :root.dark .job-row__cancel, :root.dark .job-row__detail { font-family: var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+:root.dark .jobq__dot, :root.dark .job-row__dot, :root.dark .job-row__bar-fill { background: #f1f1f2; }
+:root.dark .jobq__dot--done { background: var(--color-green-300); }
+:root.dark .job-row__bar { background: #2a2a2d; }
+
+/* First-run welcome: the device, switched on for the first time. */
+:root.dark .onboarding__dialog { max-width: 26rem; padding: 1.25rem; display: flex; flex-direction: column; gap: .75rem; }
+:root.dark .onboarding__top { display: flex; align-items: center; gap: .875rem; margin-bottom: .5rem; }
+:root.dark .onboarding__label { font-size: 1.375rem; line-height: 1; font-weight: 300; letter-spacing: .02em; color: var(--color-zinc-100); }
+:root.dark .onboarding__top .dev-display { flex: 1 1 0%; }
+:root.dark .onboarding__title { font-family: var(--font-sans); font-size: 1.5rem; line-height: 1.2; font-weight: 300; letter-spacing: .01em; text-transform: none; margin-bottom: 0; }
+:root.dark .onboarding__lead { margin-bottom: .25rem; }
+:root.dark .onboarding__continue { padding: .75rem 1rem; font-weight: 500; }
+:root.dark .onboarding__skip { align-self: center; padding: .35rem .65rem; font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-400); }
+:root.dark .onboarding__skip:hover { color: #fff; }
+:root.dark .onboarding__tape { position: relative; height: 1.5rem; overflow: hidden; border-radius: .3rem !important; background: repeating-linear-gradient(90deg, #46464b 0 2px, transparent 2px 6px) center / 100% 40% no-repeat, #060607; box-shadow: inset 0 1px 3px rgba(0,0,0,.9), 0 0 0 1px #232326; opacity: .55; }
+:root.dark .onboarding__tape-head { position: absolute; top: 0; bottom: 0; left: 0; width: 28%; background: repeating-linear-gradient(90deg, #f1f1f2 0 2px, transparent 2px 6px) center / 100% 70% no-repeat; opacity: 0; }
+:root.dark .onboarding__tape--busy { opacity: 1; }
+:root.dark .onboarding__tape--busy .onboarding__tape-head { opacity: 1; animation: tq-scan 1.4s ease-in-out infinite alternate; }
+@keyframes tq-scan { from { transform: translateX(0); } to { transform: translateX(257%); } }
+
+/* Job queue: a black display strip, rows as tape counters. */
+:root.dark .jobq__head { padding: .5rem .75rem; background: #000; border-bottom: 1px solid #2a2a2d; }
+:root.dark .jobq__head:hover { background: #0a0a0b; }
+:root.dark .jobq__summary { font-size: .625rem; font-weight: 700; color: #fff; letter-spacing: .14em; }
+:root.dark .jobq__running-label, :root.dark .jobq__chevron { font-size: .5625rem; color: var(--color-zinc-400); }
+:root.dark .jobq__dot:not(.jobq__dot--done), :root.dark .job-row__dot { animation: tq-blink 1.2s ease-in-out infinite; box-shadow: 0 0 6px rgba(255,255,255,.5); }
+@keyframes tq-blink { 50% { opacity: .25; } }
+:root.dark .jobq__foot-btn { font-size: .5625rem; }
+:root.dark .job-row { padding: .625rem .75rem; }
+:root.dark .job-row__label { font-size: .625rem; color: #fff; }
+:root.dark .job-row__status { font-size: .5625rem; }
+:root.dark .job-row__status--running { color: #fff; }
+:root.dark .job-row__detail, :root.dark .job-row__error { font-size: .5625rem; letter-spacing: .06em; }
+:root.dark .job-row__bar { height: .5rem; border-radius: .2rem !important; overflow: hidden; background: repeating-linear-gradient(90deg, #46464b 0 2px, transparent 2px 5px) center / 100% 60% no-repeat, #060607; box-shadow: inset 0 1px 2px rgba(0,0,0,.9), 0 0 0 1px #232326; }
+:root.dark .job-row__bar-fill { background: repeating-linear-gradient(90deg, #f1f1f2 0 2px, transparent 2px 5px) center / 100% 100% no-repeat; transition: width .3s; }
+
+/* Lyrics: a numbered readout - mono counter gutter, light text. */
+:root.dark .lyrics-modal__lyrics, :root.dark .lyrics-modal__analysis { padding: 1rem 1.25rem; font-weight: 300; }
+:root.dark .lyrics-modal__line { display: flex; align-items: baseline; gap: .75rem; line-height: 1.7; }
+:root.dark .lyrics-modal__num { flex-shrink: 0; width: 1.5rem; margin-right: 0; text-align: right; font-family: var(--font-mono); font-size: .625rem; letter-spacing: .06em; color: var(--color-zinc-600); }
+:root.dark .lyrics-modal__mark:hover { background: #17171a; }
+:root.dark .lyrics-modal__mark--active .lyrics-modal__num { color: #fff; }
+:root.dark .lyrics-modal__footer span, :root.dark .lyrics-modal__footer { font-family: var(--font-mono); font-size: .5625rem; letter-spacing: .14em; text-transform: uppercase; }
+:root.dark .lyrics-modal__vibe { font-weight: 300; }
+:root.dark .lyrics-modal__heading-label { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-400); }
+:root.dark .lyrics-modal__loading, :root.dark .lyrics-modal__none { font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Lyrics: make the selected passage unmistakable - bright text on a lifted
+ * panel with a thick white bar - and let the rest recede while one is picked. */
+:root.dark .lyrics-modal__mark { border-left-width: 3px; transition: opacity .15s, background-color .15s; }
+:root.dark .lyrics-modal__mark--active, :root.dark .lyrics-modal__mark--active:hover { background: #2a2a2f; border-left-color: #fff; box-shadow: inset 0 0 0 1px #3a3a3f; }
+:root.dark .lyrics-modal__mark--active .lyrics-modal__line { color: #fff; font-weight: 500; }
+:root.dark .lyrics-modal__lines:has(.lyrics-modal__mark--active) .lyrics-modal__mark:not(.lyrics-modal__mark--active) { opacity: .45; }
+:root.dark .lyrics-modal__lines:has(.lyrics-modal__mark--active) .lyrics-modal__mark:not(.lyrics-modal__mark--active):hover { opacity: .8; }
+
+/* Brand and page titles: the bundled mono (Geist isn't shipped, so the old
+ * sans fell back to whatever the system had). The brand is also the home link. */
+:root.dark .navbar__brand { font-family: var(--font-mono); font-size: 1.125rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: #fff; cursor: pointer; }
+:root.dark .navbar__brand:hover { color: var(--color-zinc-300); }
+:root.dark main h1, :root.dark .settings__title, :root.dark .eq-page__title, :root.dark .topics__title { font-family: var(--font-mono); font-weight: 500 !important; font-size: 1.5rem; letter-spacing: .12em; text-transform: uppercase; }
+:root.dark .library__hero-title, :root.dark .library__empty-title, :root.dark .playlists__name { font-family: var(--font-mono); font-weight: 500; letter-spacing: .04em; }
+
+/* Switches say ON / OFF, and "on" is a lit, filled switch: a dark knob on a
+ * light track, versus the dark recessed groove when off. */
+:root.dark .toggle::after { content: "OFF"; position: absolute; right: .4rem; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: .5rem; letter-spacing: .1em; color: #8d8d92; pointer-events: none; }
+:root.dark .toggle--on { background: #e8e8ea; border-color: #e8e8ea; }
+:root.dark .toggle--on::after { content: "ON"; left: .4rem; right: auto; color: #1c1c1f; font-weight: 700; }
+:root.dark .toggle--on .toggle__knob { background: #1c1c1f; box-shadow: none; }
+
+/* ---- EQ panel: a hardware fader bank ---- */
+:root.dark .eq { padding: 1rem; border: 1px solid #2c2c2f; border-radius: .875rem !important; background: linear-gradient(180deg, #1d1d1f, #121213); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 18px 40px -16px rgba(0,0,0,.75); }
+:root.dark .eq .eq__btn, :root.dark .eq .eq__add { border: 1px solid #2b2b2e; border-top-color: #3a3a3e; border-radius: .3rem !important; background: linear-gradient(180deg, #202022, #161617); color: var(--color-zinc-300); padding: .4rem .65rem; }
+:root.dark .eq .eq__btn:hover, :root.dark .eq .eq__add:hover { background: linear-gradient(180deg, #262628, #1b1b1c); color: #fff; }
+:root.dark .eq .eq__btn:active, :root.dark .eq .eq__add:active { background: #121213; transform: translateY(1px); }
+
+/* Band columns sit on the panel as a row of channel strips. */
+:root.dark .eq__bands { gap: .25rem; padding: .75rem .5rem .5rem; background: #0b0b0c; border: 1px solid #232326; border-radius: .5rem !important; box-shadow: inset 0 1px 4px rgba(0,0,0,.8); align-items: flex-start; }
+:root.dark .eq-band { width: 3rem; gap: .35rem; }
+:root.dark .eq-band:first-child { padding-right: .35rem; margin-right: .25rem; border-right: 1px solid #232326; width: 3.25rem; }
+
+/* The frequency is a little LCD, not a form field: no spinner arrows. */
+:root.dark .eq-band__freq { -moz-appearance: textfield; appearance: textfield; width: 100%; padding: .2rem 0; font-size: 10px; letter-spacing: .04em; text-align: center; color: #fff; background: #000; border: 1px solid #2a2a2d; border-radius: .25rem !important; }
+:root.dark .eq-band__freq::-webkit-inner-spin-button, :root.dark .eq-band__freq::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+:root.dark .eq-band__freq:focus { outline: none; border-color: var(--color-zinc-400); }
+:root.dark .eq-band__pre-label { display: block; width: 100%; padding: .2rem 0; text-align: center; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+
+/* The fader: a deep groove, a centre (0 dB) tick, and a wide ribbed cap. */
+:root.dark .eq-band__track { position: relative; }
+:root.dark .eq-band__track::before { content: ""; position: absolute; left: .55rem; right: .55rem; top: 50%; height: 1px; background: #4a4a4f; pointer-events: none; }
+:root.dark .eq input[type="range"]::-webkit-slider-runnable-track { height: 5px; background: #000; border-radius: 3px !important; box-shadow: inset 0 1px 2px #000, 0 0 0 1px #2d2d31; }
+:root.dark .eq input[type="range"]::-webkit-slider-thumb { width: 12px; height: 26px; margin-top: -10.5px; border: 1px solid #6a6a70; border-radius: 2px !important; background: linear-gradient(90deg, #f4f4f6 0 42%, #3a3a3e 42% 58%, #f4f4f6 58% 100%); box-shadow: 0 2px 4px rgba(0,0,0,.6); }
+:root.dark .eq input[type="range"]:hover::-webkit-slider-thumb, :root.dark .eq input[type="range"]:focus-visible::-webkit-slider-thumb { background: linear-gradient(90deg, #fff 0 42%, #e8e8ea 42% 58%, #fff 58% 100%); border-color: #9a9aa0; }
+
+:root.dark .eq-band__gain { font-size: 10px; letter-spacing: .06em; color: #fff; }
+:root.dark .eq-band__remove { width: 1.25rem; height: 1.25rem; display: grid; place-items: center; border: 1px solid #2b2b2e; border-radius: .25rem !important; font-size: .8rem; }
+
+/* "+ Band": a key at the end of the row, not a dashed box. */
+:root.dark .eq .eq__add { align-self: center; width: 3rem; height: 3rem; margin: 0 0 0 .25rem; display: grid; place-items: center; text-align: center; border-style: solid; font-family: var(--font-mono); font-size: .5625rem; letter-spacing: .14em; line-height: 1.3; }
+
+/* Headphone correction: a quieter second section. */
+:root.dark .eq__correction { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid #2a2a2d; }
+:root.dark .eq__note { font-size: 10px; line-height: 1.5; margin-top: .6rem; }
+:root.dark .eq__toggle input[type="checkbox"] { width: 1rem; height: 1rem; accent-color: #f1f1f2; }
+
+/* Controls speak in the device's mono, so a search box or a select doesn't
+ * read as a different product from the keys around it. */
+:root.dark input, :root.dark select, :root.dark textarea { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .02em; }
+:root.dark input::placeholder, :root.dark textarea::placeholder { font-family: var(--font-mono); letter-spacing: .04em; }
+
+/* ---- Dropdown: the select, drawn by us ---- */
+.dropdown { position: relative; display: inline-block; }
+.dropdown__button { display: flex; align-items: center; justify-content: space-between; gap: .75rem; width: 100%; min-width: 9rem; padding: .5rem .75rem; text-align: left; }
+:root.dark .dropdown__button { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .02em; color: #fff; background-color: #000; border: 1px solid var(--hairline); border-radius: .4rem !important; }
+:root.dark .dropdown__button:hover, :root.dark .dropdown__button[aria-expanded="true"] { border-color: var(--color-zinc-400); }
+.dropdown__menu { position: absolute; z-index: 60; left: 0; right: 0; top: calc(100% + .25rem); min-width: 100%; max-height: 16rem; overflow-y: auto; }
+:root.dark .dropdown__menu { background: #000; border: 1px solid var(--hairline); border-radius: .4rem !important; box-shadow: 0 12px 28px -8px rgba(0,0,0,.8); padding: .25rem 0; }
+.dropdown__item { display: block; width: 100%; padding: .45rem .75rem; text-align: left; white-space: nowrap; }
+:root.dark .dropdown__item { font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-zinc-300); }
+:root.dark .dropdown__item:hover { background: #17171a; color: #fff; }
+:root.dark .dropdown__item--selected { color: #fff; box-shadow: inset 2px 0 0 #f1f1f2; }
+.settings__model-pick, .settings__model-pick .dropdown__button { width: 100%; }
+
+/* The old select's padding class also lands on the dropdown wrapper; the
+ * button inside has its own, and wrapper padding stretched the search field. */
+.dropdown.eq-page__sort { padding: 0; }
+
+/* A modal never outgrows the window: the overlay has 1rem of padding all
+ * round, and with the player bar up it also stops 6.25rem short of the bottom
+ * (see 00-base.css). (A percentage doesn't work here: the overlay's height
+ * isn't definite for its flex child, so the panel grew to fit its content.) */
+.song-info__panel, .lyrics-modal__panel, .aam { max-height: calc(100vh - 2rem); }
+.player-open .song-info__panel, .player-open .lyrics-modal__panel, .player-open .aam,
+.app-shell--player .song-info__panel, .app-shell--player .lyrics-modal__panel, .app-shell--player .aam { max-height: calc(100vh - 6.25rem - 2rem); }
+
+/* Cover-less placeholder: near-black ground, bright ink. The holes in the
+ * solid glyphs show the same ground. (Silver derives its own from this.) */
+:root.dark .track-thumbnail--placeholder { --glyph-ground: #0b0b0c; background: #0b0b0c; }
+:root.dark .track-thumbnail--placeholder .track-thumbnail__glyph { color: #e9e9eb; }
+
+/* Depth: a dropdown stands proud of the metal like a key; a search field is
+ * sunk into it. Written after the flat rules above so they win. */
+:root.dark .dropdown__button {
+  background: linear-gradient(180deg, #262628, #19191b);
+  border: 1px solid #2b2b2e; border-top-color: #3f3f43; border-bottom-color: #0c0c0d;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 2px 0 #09090a, 0 5px 8px -3px rgba(0,0,0,.7);
+}
+:root.dark .dropdown__button:hover, :root.dark .dropdown__button[aria-expanded="true"] {
+  background: linear-gradient(180deg, #2c2c2f, #1d1d20); border-color: #2b2b2e; border-top-color: #55555a; border-bottom-color: #0c0c0d;
+}
+:root.dark .dropdown__button:active { transform: translateY(1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 1px 0 #09090a; }
+:root.dark .eq-page__search, :root.dark .library__search {
+  background-color: #050506;
+  border: 1px solid #0b0b0c; border-top-color: #000; border-bottom-color: #303034;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.9), inset 0 0 0 1px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.06);
+}
+
+/* The other text boxes are sunk into the metal like the search fields. */
+:root.dark .topics__search, :root.dark .settings__prompt, :root.dark .eq__import-text {
+  background-color: #050506;
+  border: 1px solid #0b0b0c; border-top-color: #000; border-bottom-color: #303034;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.9), inset 0 0 0 1px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.06);
+}
+:root.dark .settings__prompt:focus { border-color: #0b0b0c; border-top-color: #000; border-bottom-color: #55555a; }
+
+/* An open dropdown: a recessed tray holding raised keys; the chosen one is the pressed (bright) key. */
+:root.dark .dropdown__menu {
+  top: calc(100% + .5rem); padding: .35rem; background: #0b0b0c;
+  border: 1px solid #2b2b2e; border-top-color: #1a1a1c; border-bottom-color: #3a3a3e;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,.85), 0 14px 28px -8px rgba(0,0,0,.85);
+}
+:root.dark .dropdown__item {
+  padding: .6rem .75rem; background: linear-gradient(180deg, #262628, #19191b);
+  border: 1px solid #2b2b2e; border-top-color: #3f3f43; border-bottom-color: #0c0c0d; border-radius: .3rem !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 1px 0 #09090a;
+}
+:root.dark .dropdown__item + .dropdown__item { margin-top: .3rem; }
+:root.dark .dropdown__item:hover { background: linear-gradient(180deg, #2c2c2f, #1d1d20); color: #fff; }
+:root.dark .dropdown__item:active { transform: translateY(1px); }
+:root.dark .dropdown__item--selected, :root.dark .dropdown__item--selected:hover { background: #efeff0; color: #0a0a0a; border-color: #efeff0; box-shadow: none; }
+
+/* The lyrics panel: a metal frame round a sunken well, in bigger type. */
+.lyrics-panel {
+  width: 32rem; height: 70vh;
+  background: linear-gradient(180deg, #1d1d1f, #121213);
+  border: 1px solid #2b2b2e; border-top-color: #3f3f43;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 32px -8px rgba(0,0,0,.8);
+}
+.lyrics-panel__head { padding: .65rem .75rem; border-bottom: 1px solid #2b2b2e; }
+.lyrics-panel__list {
+  margin: .6rem; padding: 1rem 1.15rem 40vh; background: #050506;
+  border: 1px solid #0b0b0c; border-bottom-color: #303034; border-radius: .4rem !important;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,.9), inset 0 0 0 1px rgba(0,0,0,.35);
+}
+.lyrics-panel__line { font-size: 1.0625rem; line-height: 1.5; padding: .55rem 0; }
+.lyrics-panel__line--plain { color: #d6d6d9; }
+.lyrics-panel__trans { margin-top: .35rem; font-size: .8125rem; }
+
+/* The queue: a metal frame round a sunken well, the playing row lit, and each row's controls small raised keys. */
+.queue-panel {
+  background: linear-gradient(180deg, #1d1d1f, #121213);
+  border: 1px solid #2b2b2e; border-top-color: #3f3f43;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 32px -8px rgba(0,0,0,.8);
+}
+.queue-panel__head { padding: .65rem .75rem; border-bottom: 1px solid #2b2b2e; }
+.queue-panel__note { padding: .5rem .85rem 0; }
+.queue-panel__list {
+  margin: .6rem; padding: .25rem; background: #050506;
+  border: 1px solid #0b0b0c; border-bottom-color: #303034; border-radius: .4rem !important;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,.9), inset 0 0 0 1px rgba(0,0,0,.35);
+}
+.queue-panel__row { gap: .5rem; padding: .45rem .5rem; border-radius: .3rem !important; }
+.queue-panel__row + .queue-panel__row { border-top: 1px solid #111113; }
+.queue-panel__row:hover { background: #0e0e10; }
+.queue-panel__row--current { background: #141416; box-shadow: inset 2px 0 0 #f1f1f2; }
+.queue-panel__num { width: 1.75rem; padding: .2rem 0; text-align: center; font-family: var(--font-mono); border-radius: .2rem !important; }
+.queue-panel__row--current .queue-panel__num { background: #f1f1f2; color: #0a0a0a; }
+.queue-panel__title { font-size: .8125rem; }
+.queue-panel__btn {
+  width: 1.75rem; height: 1.75rem;
+  background: linear-gradient(180deg, #262628, #19191b);
+  border: 1px solid #2b2b2e; border-top-color: #3f3f43; border-radius: .25rem !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 1px 0 #09090a;
+}
+.queue-panel__btn:hover:not(:disabled) { background: linear-gradient(180deg, #2c2c2f, #1d1d20); color: #fff; }
+.queue-panel__btn:active:not(:disabled) { transform: translateY(1px); }
+
+/* Icon-only buttons (Close and the like): a square key, whatever text-button class they also carry. */
+.btn--icon.btn--icon { display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; padding: 0; flex-shrink: 0; line-height: 1; }
+/* Buttons that carry an icon and a label. */
+.library__tool-btn, .danger-zone__btn, .settings__test { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; }
+.library__tool-btn svg, .danger-zone__btn svg, .settings__test svg { flex-shrink: 0; }
+.danger-zone__row--stack { flex-direction: column; align-items: stretch; gap: .75rem; }
+.danger-zone__choices { display: flex; flex-direction: column; gap: .5rem; }
+.danger-zone__choice { display: flex; align-items: flex-start; gap: .6rem; cursor: pointer; }
+.danger-zone__choice input { margin-top: .2rem; flex-shrink: 0; }
+.danger-zone__choice-name { display: block; font-size: .8125rem; }
+.danger-zone__choice-hint { display: block; margin: 0; }
+.danger-zone__row--stack .danger-zone__btn { align-self: flex-start; }
+.onboarding__extras-title { margin: 1rem 0 .4rem; font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.onboarding__extra { display: flex; align-items: flex-start; gap: .6rem; margin-bottom: .6rem; cursor: pointer; text-align: left; }
+.onboarding__extra input { margin-top: .2rem; flex-shrink: 0; }
+.onboarding__extra-name { display: block; font-size: .8125rem; }
+.onboarding__extra-hint { display: block; font-size: .6875rem; color: var(--dim); }

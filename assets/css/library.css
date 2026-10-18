@@ -1,0 +1,139 @@
+/* Library page (src/ui/pages/library.rs): discography browser. */
+.library__header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+.library__title { margin-bottom: .25rem; }
+.library__alert { margin-bottom: 1rem; }
+
+.library__tools { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.library__tool-btn { font-size: .8125rem; line-height: 1.25rem; padding: .375rem .75rem; border: 1px solid var(--hairline); border-radius: 0; color: var(--color-zinc-600); flex-shrink: 0; transition: color .15s, background-color .15s, transform .1s; }
+.library__tool-btn:hover { background: var(--color-zinc-100); color: var(--color-zinc-900); }
+.library__tool-btn:active { transform: scale(.98); }
+.library__tool-btn:disabled { opacity: .45; }
+:root.dark .library__tool-btn { color: var(--color-zinc-400); }
+:root.dark .library__tool-btn:hover { background: var(--color-zinc-900); color: var(--color-zinc-100); }
+.library__more { margin: 1rem auto 0; display: block; }
+
+.library__import-ok { font-size: .8125rem; color: var(--color-green-700); margin-bottom: 1rem; }
+:root.dark .library__import-ok { color: var(--color-green-400); }
+
+.library__filters { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--hairline); }
+.library__search { margin-left: auto; min-width: 12rem; padding: .375rem .625rem; margin-bottom: .5rem; font-size: .8125rem; border: 1px solid var(--hairline); border-radius: 0; background: var(--surface); outline: none; }
+.library__search:focus { border-color: var(--color-zinc-400); }
+
+.library__empty { text-align: center; padding: 7rem 0; }
+.library__empty-title { font-family: var(--font-serif); font-size: 1.75rem; letter-spacing: -.02em; margin-bottom: .5rem; }
+.library__empty-text { color: var(--color-zinc-500); margin: 0 auto 1.5rem; max-width: 26rem; }
+
+.library__folders { border: 1px solid var(--hairline); border-radius: 0; background: var(--surface); margin-bottom: 1.75rem; }
+.library__folder { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .625rem 1rem; font-size: .8125rem; }
+.library__folder + .library__folder { border-top: 1px solid var(--hairline); }
+.library__folder-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-size: .75rem; color: var(--color-zinc-600); }
+:root.dark .library__folder-path { color: var(--color-zinc-400); }
+.library__remove { font-size: .8125rem; color: var(--color-zinc-500); flex-shrink: 0; }
+.library__remove:hover { color: var(--color-red-600); }
+:root.dark .library__remove:hover { color: var(--color-red-300); }
+
+/* Artist / album grids */
+.library__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1.25rem; align-items: start; }
+@media (min-width: 560px) { .library__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 760px) { .library__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 960px) { .library__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.library__card { display: block; text-align: left; min-width: 0; }
+.library__card-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; margin-bottom: .75rem; border: 1px solid var(--hairline); transition: box-shadow .2s, transform .2s; }
+.library__card:hover .library__card-img { box-shadow: 0 2px 8px rgba(0,0,0,.04); transform: translateY(-1px); }
+.library__card-title { font-size: .875rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.library__card-sub { font-size: .75rem; color: var(--color-zinc-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+:root.dark .library__card-sub { color: var(--color-zinc-400); }
+
+/* Artist / album pages */
+.library__back { display: inline-flex; align-items: center; gap: .375rem; font-size: .8125rem; color: var(--color-zinc-500); margin-bottom: 1.5rem; }
+.library__back:hover { color: var(--color-zinc-900); }
+:root.dark .library__back:hover { color: var(--color-zinc-100); }
+.library__hero { display: flex; gap: 1.5rem; align-items: flex-end; margin-bottom: 2.5rem; }
+.library__hero-img { width: 8.5rem; height: 8.5rem; object-fit: cover; flex-shrink: 0; border: 1px solid var(--hairline); }
+.library__hero-title { font-family: var(--font-serif); font-size: 2rem; line-height: 1.1; letter-spacing: -.03em; font-weight: 500; margin-bottom: .25rem; }
+.library__play-all { margin-top: 1rem; }
+/* Play and Add-to-playlist side by side (the add button sits in its own wrapper, so it needs a flex row) */
+.library__album-actions { display: flex; align-items: center; gap: .5rem; margin-top: 1rem; }
+.library__album-actions .library__play-all { margin-top: 0; }
+.library__album-actions .playlists__album-add { margin-left: 0; }
+.library__album-actions .btn-solid, .library__album-actions .library__tool-btn { height: 2.25rem; display: inline-flex; align-items: center; justify-content: center; padding-top: 0; padding-bottom: 0; }
+.library__album-block { margin-bottom: 3rem; }
+.library__album-head { display: flex; align-items: center; gap: 1rem; margin-bottom: .75rem; }
+.library__album-thumb { width: 3.25rem; height: 3.25rem; object-fit: cover; flex-shrink: 0; border: 1px solid var(--hairline); }
+.library__album-link { font-family: var(--font-serif); font-size: 1.125rem; letter-spacing: -.01em; text-align: left; }
+.library__album-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.library__disc { font-size: .75rem; color: var(--color-zinc-500); padding: .75rem .5rem .25rem; }
+
+/* Track rows */
+.library__tracks { display: flex; flex-direction: column; }
+.library__row { display: flex; align-items: center; gap: .875rem; padding: .625rem .5rem; border-bottom: 1px solid var(--hairline); transition: background-color .15s; }
+.library__row:hover, .library__row--current { background: var(--color-zinc-100); }
+:root.dark .library__row:hover, :root.dark .library__row--current { background: var(--color-zinc-900); }
+.library__row--current .library__row-title { font-weight: 600; }
+.library__row-num { width: 1.5rem; display: flex; justify-content: flex-end; font-family: var(--font-mono); font-size: .75rem; color: var(--color-zinc-500); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.library__row-body { flex: 1; min-width: 0; }
+.library__row-title { font-size: .875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.library__row-sub { font-size: .75rem; color: var(--color-zinc-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+:root.dark .library__row-sub { color: var(--color-zinc-400); }
+.library__row-time { font-family: var(--font-mono); font-size: .75rem; color: var(--color-zinc-500); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+/* Actions stay out of the way until the row is hovered. */
+.library__row-info, .library__row-play { display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-zinc-500); opacity: 0; transition: opacity .15s, color .15s, background-color .15s; }
+.library__row:hover .library__row-info, .library__row:hover .library__row-play, .library__row:focus-within .library__row-info, .library__row:focus-within .library__row-play { opacity: 1; }
+.library__row-info { width: 1.75rem; height: 1.75rem; border-radius: 0; }
+.library__row-info:hover { color: var(--color-zinc-900); }
+.library__row-play { width: 1.75rem; height: 1.75rem; border-radius: 0; background: var(--color-zinc-900); color: var(--color-white); }
+.library__row-play:hover { background: var(--color-zinc-700); }
+:root.dark .library__row-info:hover { color: var(--color-zinc-100); }
+:root.dark .library__row-play { background: var(--color-zinc-100); color: var(--color-zinc-900); }
+:root.dark .library__row-play:hover { background: var(--color-zinc-300); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* `backwards`, not `both`: holding the finished transform keeps a containing block alive, and a drawer (position: fixed) opened from a row would stay trapped inside its album block instead of covering the screen. */
+  .library__card, .library__row, .library__album-block { animation: tq-rise .6s cubic-bezier(.16, 1, .3, 1) backwards; }
+  .library__grid > :nth-child(2), .library__tracks > :nth-child(2) { animation-delay: 40ms; }
+  .library__grid > :nth-child(3), .library__tracks > :nth-child(3) { animation-delay: 80ms; }
+  .library__grid > :nth-child(4), .library__tracks > :nth-child(4) { animation-delay: 120ms; }
+  .library__grid > :nth-child(5), .library__tracks > :nth-child(5) { animation-delay: 160ms; }
+  .library__grid > :nth-child(n+6), .library__tracks > :nth-child(n+6) { animation-delay: 200ms; }
+  @keyframes tq-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+.library__album-artists { font-size: .9375rem; color: var(--color-zinc-600); }
+:root.dark .library__album-artists { color: var(--color-zinc-300); }
+.library__album-artists .library__album-link { font-family: inherit; font-size: inherit; letter-spacing: 0; }
+
+/* Favorite heart stays visible once set; "Play next" is a small mono tag. */
+.library__row-fav--on { opacity: 1; color: var(--color-zinc-100); }
+.library__row-next { width: auto; padding: 0 .4rem; font-family: var(--font-mono); font-size: .625rem; letter-spacing: .14em; }
+
+/* Playlists. */
+.playlists__new { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.playlists__new .library__search { flex: 1; }
+.playlists__item { width: 100%; text-align: left; cursor: pointer; }
+.playlists__head { margin-bottom: 1.25rem; }
+.playlists__name { width: 100%; max-width: 28rem; font-size: 2rem; line-height: 1.1; font-weight: 300; background: transparent; border: 0 !important; border-bottom: 1px solid var(--hairline) !important; padding: .25rem 0; color: var(--foreground); }
+.playlists__name:focus { outline: none !important; border-bottom-color: var(--accent) !important; }
+.playlists__actions { display: flex; gap: .5rem; align-items: center; margin-top: .75rem; }
+.playlists__delete--confirm { color: #e98a96 !important; border-color: #7a2e3b !important; }
+.playlists__album-add { display: inline-flex; align-items: center; justify-content: center; margin-left: .5rem; opacity: 1 !important; padding: .375rem .5rem; }
+.library__row-info:disabled { opacity: .2 !important; }
+
+/* "+" menu. */
+.add-to-playlist { position: relative; flex-shrink: 0; }
+.add-to-playlist__menu { position: absolute; right: 0; top: 100%; z-index: 40; width: 15rem; max-height: 18rem; overflow-y: auto; background: #000; border: 1px solid var(--line); border-radius: .4rem !important; box-shadow: 0 8px 30px rgba(0,0,0,.4); font-family: var(--font-mono); }
+.add-to-playlist__item { display: flex; align-items: center; justify-content: space-between; gap: .5rem; width: 100%; padding: .45rem .6rem; font-size: .6875rem; letter-spacing: .06em; text-transform: uppercase; color: #d6d6d9; }
+.add-to-playlist__item:hover { background: #111113; color: #fff; }
+.add-to-playlist__count { color: var(--color-zinc-500); }
+.add-to-playlist__new { display: flex; gap: .3rem; padding: .5rem .6rem; border-top: 1px solid var(--line); }
+.add-to-playlist__new input { flex: 1; min-width: 0; padding: .3rem .4rem; font-size: .6875rem; }
+
+/* A row's "+" menu must paint over the rows below it. Rows are animated, so
+ * each is its own stacking context; lift the one that has a menu open. */
+.library__row:has(.add-to-playlist__menu), .library__row:focus-within { position: relative; z-index: 30; }
+.library__row:has(.add-to-playlist__menu) .library__row-info,
+.library__row:has(.add-to-playlist__menu) .library__row-play { opacity: 1; }
+
+/* Playlist header: plain title (double-click to rename), buttons on one baseline. */
+.playlists__title { cursor: text; }
+.playlists__actions .library__play-all { margin-top: 0; }
+.playlists__actions .btn-solid, .playlists__actions .library__tool-btn { height: 2.25rem; display: inline-flex; align-items: center; justify-content: center; padding-top: 0; padding-bottom: 0; }
+.library__alert .library__tool-btn { margin-top: .5rem; }

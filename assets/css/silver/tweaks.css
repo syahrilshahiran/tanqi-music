@@ -1,0 +1,109 @@
+/* Silver skin: the parts that can't be derived. Loaded after the derived
+ * rules (see build.rs), so everything here wins. Inspired by the brushed
+ * aluminium of a hardware player: cool silver body, lighter keys, black OLED
+ * displays, one orange accent. */
+
+:root.silver {
+  color-scheme: light;
+  --background: #cdced2;
+  --foreground: #1c1c1e;
+  --hairline: #a3a5ac;
+  --surface: #e4e5e8;
+  --accent: #e8500e;
+  --accent-solid: #28282a;
+  --on-accent: #f4f4f5;
+  --silver-orange: #ff5a1f;
+
+  /* The greys run light (100) to dark (950); here they are flipped, so every
+   * rule that says "light text" now means "dark ink". */
+  --color-zinc-100: #1c1c1f;
+  --color-zinc-200: #2e2e32;
+  --color-zinc-300: #46464b;
+  --color-zinc-400: #55555b;
+  --color-zinc-500: #66666c;
+  --color-zinc-600: #80808a;
+  --color-zinc-700: #a4a5ab;
+  --color-zinc-800: #bcbdc2;
+  --color-zinc-900: #d6d7db;
+  --color-zinc-950: #e2e3e6;
+  --color-white: #f6f6f7;
+
+  --color-red-300: #a33a56;
+  --color-red-900: #e6c3cd;
+  --color-red-950: #f6e3e8;
+  --color-emerald-300: #2f6f7c;
+  --color-emerald-900: #c6dfe3;
+  --color-emerald-950: #e0eef0;
+}
+
+/* Flat silver, with a soft light wash at the very top that fades into it.
+ * The wash is one fixed-height, non-repeating strip that ends on exactly the
+ * flat colour, so it has no seam, and it scrolls away with the content (a
+ * fixed or repeating layer made scrolling laggy and left a visible line). */
+:root.silver { background-color: #cdced2; background-image: linear-gradient(180deg, #e0e1e5, #cdced2 30rem); background-repeat: no-repeat; }
+:root.silver body { background: transparent; }
+:root.silver .modal-scrim { background: rgba(60, 62, 70, .35); }
+
+/* Panels and keys get a crisp top edge, like machined aluminium. */
+:root.silver .navbar { background: linear-gradient(180deg, #e6e7ea, #d3d4d8); border-bottom-color: #aeb0b6; box-shadow: inset 0 1px 0 #fff, 0 1px 0 rgba(255,255,255,.5); backdrop-filter: none; }
+:root.silver .navbar__brand { color: #1c1c1e; }
+:root.silver .navbar__brand:hover { color: var(--silver-orange); }
+:root.silver .tabbar { border-top-color: #aeb0b6; box-shadow: inset 0 1px 0 #fff, 0 -8px 20px -12px rgba(0,0,0,.35); }
+:root.silver .tabbar__tab--active { box-shadow: inset 0 -2px 0 var(--silver-orange), 0 1px 1px rgba(0,0,0,.18); }
+:root.silver .player-bar { border-top-color: #aeb0b6; box-shadow: inset 0 1px 0 #fff, 0 -8px 20px -12px rgba(0,0,0,.35); }
+:root.silver .dev-key, :root.silver .tabbar__tab:not(.tabbar__tab--active), :root.silver .navbar__link, :root.silver .navbar__mini, :root.silver .filter-pill { box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 1px rgba(0,0,0,.18); }
+:root.silver .dev-key:active { box-shadow: inset 0 1px 3px rgba(0,0,0,.25); }
+
+/* The orange: the current track, the position chip, the record-dot of it all. */
+:root.silver .dev-chip { background: var(--silver-orange); color: #fff; }
+:root.silver .library__row--current .library__row-title,
+:root.silver .library__row--current .library__row-num,
+:root.silver .queue-panel__row--current .queue-panel__title,
+:root.silver .queue-panel__row--current .queue-panel__num { color: var(--silver-orange); }
+:root.silver .lyrics-modal__mark--active, :root.silver .lyrics-modal__mark--active:hover { border-left-color: var(--silver-orange); }
+:root.silver .library__row-fav--on { color: var(--silver-orange); }
+
+/* The disc: a flat silver platter with fine etched marks. */
+:root.silver .player-bar__etch g, :root.silver .cmw__etch g { stroke: #6a6b72; }
+:root.silver .cmw__etch circle { stroke: #9a9ba2; }
+:root.silver .player-bar__disc { background: radial-gradient(circle at 50% 30%, #eceef0, #cfd0d5); box-shadow: 0 0 0 1px #a9abb1, inset 0 2px 6px rgba(0,0,0,.18), 0 1px 0 #fff; }
+:root.silver .cmw__platter { background: radial-gradient(circle at 50% 30%, #eceef0, #cfd0d5); }
+:root.silver .player-bar__hub { background: #b9bac0; box-shadow: 0 0 0 1px #8f9096, 0 0 0 .2rem #dcdde1; }
+
+/* Floating menus sit on the metal rather than being black holes in it. */
+:root.silver .add-to-playlist__menu, :root.silver .queue-panel { background: #eceef0; border-color: #aeb0b6; box-shadow: 0 10px 28px -8px rgba(0,0,0,.4), inset 0 1px 0 #fff; }
+:root.silver .queue-panel__title, :root.silver .add-to-playlist__item { color: #2a2a2e; }
+:root.silver .queue-panel__row:hover, :root.silver .add-to-playlist__item:hover { background: #dcdde1; color: #000; }
+:root.silver .queue-panel__btn:hover:not(:disabled) { color: #000; }
+
+/* Track rows: a clearly visible divider on the silver. */
+:root.silver .library__row { border-bottom: 1px solid #9ea0a8; }
+:root.silver .library__tracks { border-top: 1px solid #9ea0a8; }
+
+/* The bold etched marks on the disc are dark ink on the silver platter. */
+:root.silver .player-bar__etch g + g { stroke: #1c1c1e; }
+/* Open dropdown on silver: a recessed tray of raised keys, the chosen one dark. */
+:root.silver .dropdown__menu { background: #d3d4d8; border-color: #aeb0b6; box-shadow: inset 0 2px 5px rgba(0,0,0,.2), 0 12px 28px -8px rgba(0,0,0,.4); }
+:root.silver .dropdown__item { box-shadow: inset 0 1px 0 #fff, 0 1px 1px rgba(0,0,0,.18); }
+:root.silver .dropdown__item:hover { background: #e9eaed; color: #000; }
+:root.silver .dropdown__item--selected, :root.silver .dropdown__item--selected:hover { background: #28282a; color: #f4f4f5; box-shadow: none; }
+
+/* Lyrics panel sits on the metal like the queue; the display line stays on black. */
+:root.silver .lyrics-panel { background: #eceef0; border-color: #aeb0b6; box-shadow: 0 10px 28px -8px rgba(0,0,0,.4), inset 0 1px 0 #fff; }
+:root.silver .lyrics-panel__line--active { color: var(--silver-orange); }
+:root.silver .dev-display__lyric { color: #fff; border-top-color: #2a2a2d; }
+
+/* Depth on silver: the dropdown is a raised key, the search field is sunk into the metal. */
+:root.silver .dropdown__button { box-shadow: inset 0 1px 0 #fff, 0 2px 0 #a3a5ac, 0 5px 8px -3px rgba(0,0,0,.3); }
+:root.silver .dropdown__button:active { box-shadow: inset 0 1px 0 #fff, 0 1px 0 #a3a5ac; }
+:root.silver .eq-page__search, :root.silver .library__search { background-color: #e9eaed; border: 1px solid #b4b6bc; border-top-color: #8f9096; border-bottom-color: #f4f4f5; box-shadow: inset 0 2px 4px rgba(0,0,0,.22), 0 1px 0 #fff; }
+:root.silver .topics__search, :root.silver .settings__prompt, :root.silver .eq__import-text { background-color: #e9eaed; border: 1px solid #b4b6bc; border-top-color: #8f9096; border-bottom-color: #f4f4f5; box-shadow: inset 0 2px 4px rgba(0,0,0,.22), 0 1px 0 #fff; color: #1c1c1e; }
+
+/* Knob on silver: the lit ticks and the pointer take the orange. */
+:root.silver .dev-knob__tick--on { stroke: var(--silver-orange); }
+:root.silver .dev-knob__pointer::before { background: var(--silver-orange); box-shadow: none; }
+
+/* Queue on silver: a lighter well, an orange mark on the playing row, keys with a bright top edge. */
+:root.silver .queue-panel__list { background: #e9eaed; border-color: #b4b6bc; border-top-color: #8f9096; border-bottom-color: #f4f4f5; box-shadow: inset 0 2px 4px rgba(0,0,0,.22), 0 1px 0 #fff; }
+:root.silver .queue-panel__row--current { box-shadow: inset 2px 0 0 var(--silver-orange); }
+:root.silver .queue-panel__btn { box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 1px rgba(0,0,0,.18); }

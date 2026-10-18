@@ -1,0 +1,14 @@
+/* OnboardingGate (src/ui/components/onboarding_gate.rs) */
+.onboarding { z-index: 100; }
+.onboarding__dialog { width: 100%; max-width: 28rem; border: 1px solid var(--color-zinc-200); background: var(--color-white); box-shadow: 0 8px 30px rgba(0,0,0,.06); padding: 1.25rem; }
+:root.dark .onboarding__dialog { border-color: var(--color-zinc-700); background: var(--color-zinc-900); }
+.onboarding__title { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; margin-bottom: .25rem; }
+.onboarding__lead { font-size: .875rem; line-height: 1.25rem; color: var(--color-zinc-500); margin-bottom: 1rem; }
+:root.dark .onboarding__lead { color: var(--color-zinc-400); }
+.onboarding__error { font-size: .75rem; line-height: 1rem; letter-spacing: .01em; margin-bottom: .75rem; }
+.onboarding__error { color: var(--color-red-700); }
+:root.dark .onboarding__error { color: var(--color-red-400); }
+.onboarding__continue { width: 100%; padding: .5rem 1rem; background: var(--color-zinc-900); color: var(--color-white); font-size: .875rem; line-height: 1.25rem; font-weight: 500; }
+:root.dark .onboarding__continue { background: var(--color-zinc-100); color: var(--color-zinc-900); }
+.onboarding__continue:disabled { opacity: .5; }
+

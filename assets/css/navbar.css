@@ -1,0 +1,18 @@
+/* NavBar (src/ui/components/navbar.rs) */
+.navbar { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--background) 88%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--hairline); }
+.navbar__inner { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; height: 3.5rem; display: flex; align-items: center; gap: 2rem; }
+.navbar__brand { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; letter-spacing: -.02em; }
+.navbar__nav { display: flex; align-items: center; gap: .25rem; }
+.navbar__link { padding: .375rem .75rem; font-size: .875rem; color: var(--color-zinc-500); border-radius: 0; transition: color .15s, background-color .15s; }
+.navbar__link:hover { color: var(--color-zinc-900); background: var(--color-zinc-100); }
+.navbar__link--active { color: var(--color-zinc-900); font-weight: 500; }
+:root.dark .navbar__link:hover { color: var(--color-zinc-100); background: var(--color-zinc-900); }
+:root.dark .navbar__link--active { color: var(--color-zinc-100); }
+.navbar__mini { margin-left: auto; display: inline-flex; align-items: center; gap: .375rem; font-size: .8125rem; color: var(--color-zinc-500); padding: .25rem .625rem; border: 1px solid var(--color-zinc-200); border-radius: 0; transition: color .15s, background-color .15s; }
+.navbar__mini:hover { color: var(--color-zinc-900); background: var(--color-zinc-100); }
+:root.dark .navbar__mini { border-color: var(--color-zinc-800); }
+:root.dark .navbar__mini:hover { color: var(--color-zinc-100); background: var(--color-zinc-900); }
+
+/* The two switches on the right: appearance and mini player. */
+.navbar__right { margin-left: auto; display: flex; align-items: center; gap: .5rem; }
+.navbar__right .navbar__mini { margin-left: 0; }

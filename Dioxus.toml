@@ -1,0 +1,23 @@
+# Packaging settings for `dx bundle` (installers and app icons). The icon files
+# in icons/ were generated for every target: .ico for Windows, .icns for macOS,
+# PNGs for Linux, plus the android/ and ios/ sets for the mobile targets.
+
+[application]
+# Android only: the permission prompt, foreground playback service and MediaSession
+# (docs/mobile-first-spec.md, 6.4-6.5). dx uses these two files as they are.
+android_main_activity = "android/MainActivity.kt"
+android_manifest = "android/AndroidManifest.xml"
+
+[bundle]
+# Same identifier the data directory uses (see `app::app_data_dir`).
+identifier = "com.tanqi.music"
+publisher = "Tanqi"
+category = "Music"
+short_description = "Local-first music player with EQ analysis and lyrics"
+icon = [
+    "icons/32x32.png",
+    "icons/128x128.png",
+    "icons/128x128@2x.png",
+    "icons/icon.icns",
+    "icons/icon.ico",
+]

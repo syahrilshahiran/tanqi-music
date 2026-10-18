@@ -1,0 +1,8 @@
+/* TrackThumbnail (src/ui/components/track_thumbnail.rs): placeholder shown when there is no cover. */
+.track-thumbnail--placeholder { background: var(--color-zinc-100); display: flex; align-items: center; justify-content: center; }
+:root.dark .track-thumbnail--placeholder { background: var(--color-zinc-800); }
+
+/* The placeholder glyph: heavy shapes in the ink colour, a little muted so a
+ * wall of cover-less albums stays calm. --glyph-ground is the placeholder's own
+ * background, for the holes cut out of the solid shapes. */
+.track-thumbnail__glyph { width: 52%; height: 52%; max-width: 6rem; max-height: 6rem; color: var(--color-zinc-100); opacity: .85; }

@@ -1,0 +1,20 @@
+/* A Track's actions as a bottom sheet (src/ui/components/track_actions_sheet.rs). */
+.track-sheet { z-index: 50; }
+.track-sheet__panel { width: 100%; max-width: 26rem; max-height: 85vh; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; padding: 1rem 1rem calc(1rem + var(--safe-b, 0px)); border: 1px solid var(--hairline); background: var(--surface); box-shadow: 0 8px 30px rgba(0,0,0,.06); }
+.track-sheet__head { display: flex; align-items: center; gap: .75rem; }
+.track-sheet__thumb { width: 3.5rem; height: 3.5rem; object-fit: cover; flex-shrink: 0; }
+.track-sheet__titles { flex: 1 1 0%; min-width: 0; }
+.track-sheet__title { font-size: 1rem; font-weight: 600; }
+.track-sheet__artist { font-size: .8125rem; color: var(--color-zinc-500); }
+:root.dark .track-sheet__artist { color: var(--color-zinc-400); }
+.track-sheet__heart { flex-shrink: 0; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; color: var(--color-zinc-400); }
+.track-sheet__heart[aria-pressed="true"] { color: var(--foreground); }
+.track-sheet__tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.track-sheet__tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; min-height: 5rem; padding: .5rem; font-size: .75rem; text-align: center; border: 1px solid var(--hairline); background: var(--color-zinc-900); }
+.track-sheet__list { display: flex; flex-direction: column; }
+.track-sheet__back { min-height: 2.75rem; text-align: left; font-size: .875rem; font-weight: 600; }
+.track-sheet__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.75rem; padding: 0 .25rem; border-top: 1px solid var(--hairline); font-size: .875rem; text-align: left; }
+.track-sheet__count { flex-shrink: 0; font-size: .75rem; color: var(--color-zinc-500); }
+.track-sheet__new { display: flex; gap: .5rem; padding-top: .75rem; border-top: 1px solid var(--hairline); }
+.track-sheet__new input { flex: 1 1 0%; min-width: 0; min-height: 2.75rem; padding: 0 .75rem; font-size: 16px; }
+.track-sheet__new .library__tool-btn { min-height: 2.75rem; }

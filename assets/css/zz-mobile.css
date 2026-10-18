@@ -1,0 +1,174 @@
+/* Phone layout (docs/mobile-first-spec.md). Loaded after the desktop styles.
+ *
+ * New pieces (the tab bar) are written mobile-first: their base rules are the
+ * phone's, and a `min-width: 960px` query turns them off. The existing desktop
+ * components are adapted by the `max-width: 959.98px` block below, so the
+ * desktop look is untouched at >= 960px. Only variables are used for colour
+ * here: build.rs derives the silver skin from top-level rules and skips media
+ * blocks, so a hardcoded colour in a query would not flip with the theme. */
+
+:root { --tab-h: 4rem; --mini-h: 4rem; --safe-b: env(safe-area-inset-bottom, 0px); --safe-t: env(safe-area-inset-top, 0px); }
+
+/* Bottom tab bar: the four destinations as a row of keys, the same metal and
+ * mono type as the player bar above it. Below modal scrims (50), so a sheet
+ * covers it. Colours are hardcoded on purpose: build.rs derives the silver
+ * skin from top-level rules like these. */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; display: flex; gap: .375rem; height: calc(var(--tab-h) + var(--safe-b)); padding: .375rem .5rem calc(.375rem + var(--safe-b)); background: linear-gradient(180deg, #1d1d1f, #121213); border-top: 1px solid #2c2c2f; box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 -10px 24px -12px rgba(0,0,0,.6); }
+.tabbar__tab { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; font-family: var(--font-mono); font-size: .5625rem; line-height: 1; letter-spacing: .14em; text-transform: uppercase; color: #9b9ba1; background: linear-gradient(180deg, #202022, #161617); border: 1px solid #2b2b2e; border-top-color: #3a3a3e; border-radius: .3rem !important; }
+.tabbar__tab:active { background: #121213; transform: translateY(1px); }
+.tabbar__tab--active { background: #efeff0; color: #0a0a0a; border-color: #efeff0; }
+.tabbar__tab--active:active { background: #d6d6d9; }
+.player-bar__expand { display: none; }
+/* Player-bar tags that are icons (shuffle, repeat, mute). */
+.tag-icon { position: relative; display: grid; place-items: center; }
+.tag-icon svg { width: 15px; height: 15px; }
+.tag-icon__one { position: absolute; right: .35rem; bottom: .25rem; font-size: .625rem; line-height: 1; font-weight: 700; }
+.library__row-more { display: none; }
+.library__title-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.library__tools-toggle, .library__drawer-scrim { display: none; }
+@media (min-width: 960px) { .tabbar { display: none; } }
+
+@media (max-width: 959.98px) {
+  /* Chrome heights, defined once: tab bar, plus the mini player when a Track is loaded. */
+  .app-shell { --chrome-bottom: calc(var(--tab-h) + var(--safe-b)); }
+  .app-shell--player { --chrome-bottom: calc(var(--tab-h) + var(--safe-b) + var(--mini-h)); }
+
+  /* Shell and header */
+  .app-main, .app-main--player { padding: 1rem 1rem calc(var(--chrome-bottom) + 1.5rem); }
+  .navbar__inner { height: calc(3rem + var(--safe-t)); padding: var(--safe-t) 1rem 0; gap: 1rem; }
+  .navbar__nav, .navbar__mini--window { display: none; }
+  main h1 { font-size: 1.75rem !important; }
+  input[type="text"], input[type="search"], input:not([type]), select, textarea, .library__search { font-size: 16px; }
+
+  /* Mini player: one row above the tab bar. Tap it to open Now Playing. */
+  .player-bar { bottom: calc(var(--tab-h) + var(--safe-b)); }
+  .player-bar__row { height: var(--mini-h); padding: .5rem .75rem; gap: .625rem; }
+  .player-bar__disc { width: 3rem; height: 3rem; }
+  .player-bar__display { flex: 1 1 0%; width: auto; min-width: 0; padding: .25rem .5rem; }
+  /* One line each; a long one scrolls while playing (the player bar marks them `marquee--long`). */
+  .player-bar__display .dev-display__title { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .marquee__inner { display: inline-block; white-space: nowrap; }
+  /* Too long for its card: a soft fade at the right edge, and while playing it loops round like a ticker (a transform, so it stays smooth). */
+  .marquee--long { -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .player-bar--playing .marquee--long .marquee__inner { will-change: transform; animation: tq-marquee var(--dur, 8s) linear infinite; }
+  /* A second copy follows the text, so it leaves on the left and comes back in from the right. */
+  .marquee--long .marquee__inner::after { content: attr(data-text); padding-left: 48px; }
+  .player-bar__display .dev-chip, .player-bar__display .dev-display__lyric,
+  .player-bar__meter, .player-bar__seek, .player-bar__tags, .player-bar .dev-knob,
+  .player-bar__keys .dev-key--stop { display: none; }
+  .player-bar__keys { grid-template-columns: repeat(3, 2.5rem); gap: .25rem; height: 2.75rem; }
+  .player-bar:not(.player-bar--open) .player-bar__expand { display: none; }
+  .player-bar__expand { display: grid; place-items: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; color: var(--color-zinc-300); }
+
+  /* Now Playing: the same bar, full screen. */
+  .player-bar--open { top: 0; bottom: 0; }
+  .player-bar--open .player-bar__row { height: 100%; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 1rem; padding: calc(3rem + var(--safe-t)) 1.25rem calc(1rem + var(--safe-b)); overflow-y: auto; }
+  .player-bar--open .player-bar__disc { align-self: center; flex-shrink: 0; width: min(72vw, 17rem); height: min(72vw, 17rem); }
+  .player-bar--open .player-bar__display { flex: 0 0 auto; align-self: stretch; width: auto; padding: .5rem .75rem; }
+  .player-bar--open .player-bar__display .dev-chip { display: inline-block; }
+  .player-bar--open .player-bar__display .dev-display__lyric { display: block; }
+  .player-bar--open .player-bar__tags .tag-icon svg { width: 18px; height: 18px; }
+  .player-bar--open .player-bar__seek { display: flex; }
+  /* One-handed: the controls sink to the bottom, in thumb reach. Transport last (and tallest, with a wide play/pause), the waveform and tag keys just above it. */
+  .player-bar--open .player-bar__tags { order: 3; margin-top: auto; }
+  .player-bar--open .player-bar__seek { order: 4; flex: 0 0 auto; }
+  .player-bar--open .player-bar__keys { order: 5; display: grid; width: 100%; grid-template-columns: 1fr 1.8fr 1fr 1fr; gap: .3rem; height: 4.25rem; }
+  .player-bar--open .player-bar__keys .dev-key { display: grid; }
+  .player-bar--open .player-bar__tags { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
+  .player-bar--open .dev-tag { min-height: 2.75rem; }
+  .player-bar--open .player-bar__expand { position: absolute; top: calc(.25rem + var(--safe-t)); right: .5rem; }
+  /* The Info modal opens next to the bar in the DOM; keep it above the open sheet. */
+  .player-bar--open ~ .modal-scrim { z-index: 90; padding-bottom: 0; }
+
+  /* Queue, lyrics and EQ panels: bottom sheets instead of popovers. */
+  .queue-panel, .lyrics-panel, .player-bar__eq-panel { position: fixed; left: 0; right: 0; bottom: 0; margin: 0; width: auto; max-width: none; z-index: 80; }
+  .queue-panel { max-height: 70dvh; }
+  .lyrics-panel { height: 70dvh; }
+  .player-bar__eq-panel .eq { width: 100%; max-width: none; max-height: 80dvh; overflow-y: auto; }
+
+  /* Modals: bottom sheets, stopping short of the mini player. */
+  .modal-scrim { align-items: flex-end; padding: 0; }
+  .player-open .modal-scrim, .app-shell--player .modal-scrim { padding-bottom: var(--chrome-bottom); }
+  .modal-scrim > * { width: 100%; max-width: none; max-height: 100%; overflow-y: auto; }
+  .modal-scrim:has(.artwork-modal__panel) { align-items: center; padding: 1rem; }
+  /* A fixed width, not shrink-to-fit: otherwise a small picture (100x100) made the whole window that small. */
+  .modal-scrim:has(.artwork-modal__panel) > * { width: 100%; max-width: 32rem; }
+
+  /* Floating job chips ride above the tab bar / mini player. */
+  .status-indicators, .status-indicators--above-player { bottom: calc(var(--chrome-bottom) + .5rem); max-width: calc(100vw - 2rem); }
+
+  /* Library */
+  .library__header { margin-bottom: 1rem; }
+  .library__tool-btn { min-height: 2.5rem; }
+  .library__filters { gap: .75rem; margin-bottom: 1.25rem; }
+  .library__search { margin-left: 0; width: 100%; min-height: 2.75rem; }
+  .library__hero { flex-wrap: wrap; align-items: flex-start; gap: 1rem; }
+  .library__hero-img { width: 6rem; height: 6rem; }
+  .library__hero-title { font-size: 1.5rem; }
+
+  /* Track rows: tap plays; fav and `⋯` stay, the rest open as a sheet from `⋯`. */
+  .library__row { flex-wrap: wrap; gap: .5rem; padding: .25rem .25rem; min-height: 3.5rem; }
+  .library__row-info, .library__row-fav--on { opacity: 1; width: 2.75rem; height: 2.75rem; }
+  .library__row-next { width: auto; padding: 0 .75rem; }
+  .library__row-more { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; color: var(--color-zinc-500); }
+  .library__row--sheet .library__row-play { display: none; }
+  .library__row-num { width: 1.25rem; }
+  .library__row--sheet > .library__row-info:not(.library__row-fav), .library__row--sheet > .add-to-playlist { display: none; }
+  /* A Playlist's rows keep their own buttons (move, remove, play), a little smaller so they fit. */
+  .library__row:not(.library__row--sheet) .library__row-info { width: 2.25rem; height: 2.25rem; }
+  .library__row:not(.library__row--sheet) .library__row-play { width: 2.25rem; height: 2.25rem; }
+
+  /* Library tools: a gear beside the title opens them as a bottom drawer. */
+  .library__heading { flex: 1 1 100%; }
+  .library__tools-toggle { display: grid; place-items: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; margin-right: -.5rem; color: var(--color-zinc-400); }
+  .library__tools { display: none; }
+  .library__drawer-scrim { display: block; position: fixed; inset: 0; z-index: 75; background: rgba(25,23,36,.45); }
+  .library__tools--open { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; max-height: 80dvh; overflow-y: auto; padding: 1.5rem 1rem calc(1rem + var(--safe-b)); background: var(--surface); border-top: 1px solid var(--hairline); }
+  .library__tools--open::before { content: ""; grid-column: 1 / -1; justify-self: center; width: 2.5rem; height: .25rem; margin: -.75rem 0 .5rem; background: var(--hairline); }
+  .library__tools--open .library__tool-btn { display: grid; place-items: center; min-height: 3.25rem; text-align: center; }
+}
+@keyframes tq-marquee { 0%, 12% { transform: translateX(0); } 100% { transform: translateX(calc(var(--shift, 0px) * -1)); } }
+
+/* A window, drawer or sheet is open: the page behind it must not scroll (or drag along when a sheet is
+ * swiped), on desktop as well as on a phone. `scrollbar-gutter` keeps the page from shifting sideways when
+ * its scrollbar goes away. */
+html:has(.modal-scrim), html:has(.library__drawer-scrim), html:has(.player-bar--open) { overflow: hidden; scrollbar-gutter: stable; }
+.modal-scrim, .library__drawer-scrim, .library__tools--open, .player-bar--open { overscroll-behavior: contain; }
+
+/* Lyrics on a phone: a full-screen reader, and Lyrics / Analysis as two tabs rather than two cramped columns. */
+@media (max-width: 959.98px) {
+  /* The window it opens from must rise above the player bar too, or the reader would sit under it. */
+  .song-info:has(.lyrics-modal), .modal-scrim:has(> .lyrics-modal__panel) { z-index: 90; }
+  .modal-scrim.lyrics-modal, .app-shell--player .modal-scrim.lyrics-modal, .player-open .modal-scrim.lyrics-modal { padding: 0; }
+  /* (selector weight on purpose: the player-bar-aware max-height rules in zz-minimal.css would win otherwise) */
+  .modal-scrim.lyrics-modal > .lyrics-modal__panel { max-width: none; width: 100%; height: 100dvh; max-height: 100dvh; }
+  .lyrics-modal__header { padding: calc(.5rem + var(--safe-t)) .75rem .5rem; align-items: center; }
+  .lyrics-modal__btn { min-height: 2.5rem; padding: 0 .75rem; }
+  .lyrics-modal__tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .375rem; padding: .5rem .75rem; border-bottom: 1px solid var(--hairline); flex-shrink: 0; }
+  .lyrics-modal__tab { min-height: 2.5rem; padding: 0 .75rem; text-align: center; font-family: var(--font-mono); font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-zinc-400); background: var(--surface); border: 1px solid var(--hairline); }
+  .lyrics-modal__tab[aria-pressed="true"] { color: var(--on-accent); background: var(--accent-solid); border-color: var(--accent-solid); }
+  .lyrics-modal__columns--split { grid-template-columns: minmax(0, 1fr); }
+  .lyrics-modal__columns--split > * + * { border-left: 0; }
+  .lyrics-modal__columns--lyrics > .lyrics-modal__analysis, .lyrics-modal__columns--analysis > .lyrics-modal__lyrics { display: none; }
+  .lyrics-modal__lyrics, .lyrics-modal__analysis { padding: 1rem 1rem calc(1.5rem + var(--safe-b)); font-size: 1rem; line-height: 1.5; }
+  .lyrics-modal__line { line-height: 1.65; }
+  .lyrics-modal__footer { padding: .625rem .75rem calc(.625rem + var(--safe-b)); }
+}
+
+@media (max-width: 959.98px) {
+  /* Queue rows on a phone: bigger keys to hit. */
+  .queue-panel__btn { width: 2.25rem; height: 2.25rem; }
+  .queue-panel__row { padding: .4rem .35rem; gap: .35rem; }
+}
+
+@media (max-width: 959.98px) {
+  .btn--icon.btn--icon { width: 2.75rem; height: 2.75rem; }
+  /* In the Library tools drawer each tile is an icon above its label. */
+  .library__tools--open .library__tool-btn { flex-direction: column; gap: .4rem; }
+  .library__tools--open .library__tool-btn .tool-label { font-size: .6875rem; text-align: center; }
+}
+/* EQ key: the "analyze me" plus, and the blink while it runs. */
+.tag-icon__plus { position: absolute; right: -4px; top: -4px; display: grid; place-items: center; width: 11px; height: 11px; border-radius: 50%; background: #efeff0; color: #0a0a0a; border: 1px solid #0a0a0a; }
+/* (!important: the Now Playing rule that enlarges tag icons to 18px would otherwise blow the badge's plus up too) */
+.tag-icon .tag-icon__plus svg { width: 8px !important; height: 8px !important; stroke-width: 3; }
+.eq-toggle--busy { animation: tq-blink 1.2s ease-in-out infinite; }
