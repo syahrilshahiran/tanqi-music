@@ -8,7 +8,7 @@ The first public release: a local-first music player for Linux and Android that 
 |---|---|
 | `tanqi-music_0.1.0_amd64.deb` | Debian, Ubuntu and friends (64-bit) |
 | `tanqi-music_0.1.0_x86_64.AppImage` | Any 64-bit Linux |
-| `tanqi-music-0.1.0-debug-arm64.apk` | Android 7+ phones (64-bit ARM) |
+| `tanqi-music-0.1.0-arm64.apk` | Android 7+ phones (64-bit ARM), 9.7 MB |
 
 **Linux:** the packages don't install their dependencies for you. You need WebKitGTK 4.1 and GTK 3 (on Debian or Ubuntu: `libwebkit2gtk-4.1-0 libgtk-3-0 libxdo3`).
 
@@ -31,7 +31,7 @@ chmod +x tanqi-music_0.1.0_x86_64.AppImage && ./tanqi-music_0.1.0_x86_64.AppImag
 ### Good to know
 
 - **The numbers are a hint, not a measurement.** Tempo, key, loudness and above all the suggested EQ were tuned and checked by ear, on IEMs, by one person. Your mileage may vary, so fine-tune it, lower the strength, or switch it off.
-- **The APK is a debug build** (about 120 MB), not a signed release build.
+- The APK is a signed release build, but it comes from my own signing key, not from Google Play, so Android will ask you to allow installing from outside the store.
 - Only Linux and Android phones (64-bit ARM) have been tried. Windows, macOS and iOS never have.
 - With a hosted AI provider, the title, artist and lyrics of songs you analyse are sent to it and may use your credit or quota. The AI is off until you turn it on.
 

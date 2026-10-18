@@ -94,10 +94,11 @@ export ANDROID_HOME=~/Android/Sdk
 export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.3.11579264
 export JAVA_HOME=~/Android/jdk17
 
-# Phone (64-bit ARM, Android 7+); pass x86_64-linux-android for the emulator
-icons/android-build.sh   # runs dx build, then puts the app's own launcher icon in (dx would use its default)
+# Phone (64-bit ARM, Android 7+). This runs dx build, then puts the app's own launcher icon in
+# (dx would use its default) and signs the APK. It prints where the APK is.
+icons/android-build.sh --release
 
-adb install -r target/dx/tanqi-music/debug/android/app/app/build/outputs/apk/debug/app-debug.apk
+adb install -r target/dx/tanqi-music/release/android/app/app/build/outputs/apk/release/tanqi-music-release.apk
 ```
 
 On first launch it asks to read your music and show notifications. Then open the **gear** next to *Library*, choose **Folders**, and add your music folder. When you switch between the two targets, delete the old `jniLibs/<other arch>` folder under `target/dx/.../app/src/main/`, or the APK carries both.
@@ -129,7 +130,7 @@ Ollama has no password, so only do this on a network you trust.
 - **Tempo and key** are read from the middle 90 seconds of a track to keep the work small enough for a phone. The spectrum and loudness use the whole track.
 - **"Usual" is measured, not ideal**: the reference comes from about 900 tracks of the author's own library (rock, soundtracks, K-pop, Malay pop), so the suggested EQ flags what is unusual, not what is wrong.
 - **Very large files** (a 30-minute lossless mix, say) can run an Android phone out of memory.
-- **Android builds** are debug builds for now (about 120 MB); a signed release build isn't set up.
+- **Android:** `icons/android-build.sh --release` makes a small (about 10 MB) signed APK, and without `--release` it makes a large debug one. The release one is signed with a key kept in `~/.config/tanqi/`, outside the repo.
 - **Windows, macOS and iOS** have never been built or tried.
 - If you refuse the music permission on Android, Tanqi says why the library is empty and links to the app's settings. It never deletes your library because access is missing.
 
