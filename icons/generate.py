@@ -5,8 +5,8 @@ ring with an inner groove, a hub dot and a tail), silver on the app's matte blac
     python3 icons/generate.py
 
 Needs pycairo and Pillow. Edit `mark()` below to change the artwork; every size
-and format is redrawn from it (sizes up to 64px get a heavier groove so it
-stays readable).
+and format is redrawn from it (sizes up to 128px, and the Android foreground, get a brighter, heavier
+groove so it stays readable).
 
 Outputs, by platform:
   desktop     32x32.png 64x64.png 128x128.png 128x128@2x.png icon.png icon.ico icon.icns
@@ -22,7 +22,7 @@ import cairo
 from PIL import Image
 
 # The app's device palette: matte black body, silver marks.
-BASE, EDGE, SILVER, GROOVE = "#0d0d0f", "#26262a", "#e4e4e7", "#3a3a3e"
+BASE, EDGE, SILVER, GROOVE, GROOVE_SMALL = "#0d0d0f", "#26262a", "#e4e4e7", "#505056", "#8e8e94"
 
 def rgb(h):
     h = h.lstrip('#'); return tuple(int(h[i:i+2], 16)/255 for i in (0, 2, 4))
@@ -52,7 +52,7 @@ MARK_CENTRE = 524.5
 def mark(ctx, small=False):
     """The Q, drawn in a 1024x1024 box. `small` thickens the inner groove for tiny sizes."""
     circle(ctx, 290, stroke=SILVER, line=76)                                   # the platter ring
-    circle(ctx, 170, stroke=GROOVE if not small else "#55555a", line=26 if small else 14)   # inner groove
+    circle(ctx, 170, stroke=GROOVE_SMALL if small else GROOVE, line=40 if small else 20)    # inner groove
     k = math.sqrt(0.5)
     ctx.new_path(); ctx.move_to(500+210*k, 500+210*k); ctx.line_to(500+480*k, 500+480*k)  # the tail
     ctx.set_source_rgb(*rgb(SILVER)); ctx.set_line_width(76); ctx.set_line_cap(cairo.LINE_CAP_ROUND); ctx.stroke()
@@ -71,7 +71,8 @@ def render(size, variant="rounded", scale=1.0):
     elif variant == "circle":
         ctx.arc(512, 512, 512, 0, 2*math.pi); ctx.set_source_rgb(*rgb(BASE)); ctx.fill()
     ctx.translate(512, 512); ctx.scale(scale, scale); ctx.translate(-MARK_CENTRE, -MARK_CENTRE)
-    mark(ctx, small=size <= 64)
+    # The Android adaptive foreground is drawn at ~60% of its canvas, so it needs the small treatment too.
+    mark(ctx, small=size <= 128 or variant == "transparent")
     img = Image.frombuffer("RGBA", (size, size), bytes(surf.get_data()), "raw", "BGRa", 0, 1)
     return img.copy()
 

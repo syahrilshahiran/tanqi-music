@@ -50,10 +50,6 @@ fn aggregate_tags(items: &[LyricsAnalysis], field: impl Fn(&LyricsAnalysis) -> &
     out
 }
 
-fn filter_tags(tags: &[TagCount], needle: &str) -> Vec<TagCount> {
-    tags.iter().filter(|t| t.key.contains(needle)).cloned().collect()
-}
-
 /// A song matches when it carries ANY selected tag.
 fn matches_tags(a: &LyricsAnalysis, selected: &HashSet<String>) -> bool {
     a.topics.iter().chain(a.entities.iter()).any(|t| selected.contains(&t.trim().to_lowercase()))

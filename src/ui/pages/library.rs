@@ -797,17 +797,18 @@ fn AlbumPage(
                 h2 { class: "library__hero-title", "{album.title}" }
                 p { class: "library__album-artists",
                     for (i, name) in artists.iter().enumerate() {
-                        if i > 0 {
-                            ", "
-                        }
-                        button {
-                            key: "{name}",
-                            class: "library__album-link",
-                            onclick: {
-                                let name = name.clone();
-                                move |_| on_open_artist.call(name.clone())
-                            },
-                            "{name}"
+                        span { key: "{name}",
+                            if i > 0 {
+                                ", "
+                            }
+                            button {
+                                class: "library__album-link",
+                                onclick: {
+                                    let name = name.clone();
+                                    move |_| on_open_artist.call(name.clone())
+                                },
+                                "{name}"
+                            }
                         }
                     }
                 }

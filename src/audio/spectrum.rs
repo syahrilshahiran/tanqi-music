@@ -401,14 +401,6 @@ fn drop_above_lowpass(fine_db: &mut [Option<f32>]) -> Option<f32> {
     None
 }
 
-/// Measures a whole mono buffer (a one-channel file).
-#[cfg(test)]
-pub(super) fn measure(samples: &[f32], sample_rate: u32) -> Spectrum {
-    let mut builder = SpectrumBuilder::new(sample_rate, 1);
-    builder.push_interleaved(samples);
-    builder.finish()
-}
-
 fn to_db(energy: f64) -> f32 {
     10.0 * energy.max(1e-12).log10() as f32
 }
