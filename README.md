@@ -96,6 +96,7 @@ export JAVA_HOME=~/Android/jdk17
 
 # Phone (64-bit ARM, Android 7+); use x86_64-linux-android for the emulator
 dx build --platform android --no-default-features --features mobile --target aarch64-linux-android
+icons/apply-android.sh   # dx overwrites the launcher icon with its default; this puts ours back
 
 adb install -r target/dx/tanqi-music/debug/android/app/app/build/outputs/apk/debug/app-debug.apk
 ```
