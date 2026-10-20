@@ -50,6 +50,10 @@
   function ctx() {
     if (!S.ctx) {
       S.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      // A hidden webview may suspend an idle context; a track that starts in a suspended one is silent.
+      S.ctx.onstatechange = () => {
+        if (S.ctx.state === "suspended" && S.playing) S.ctx.resume().catch(() => {});
+      };
       buildGraph();
       startMeter();
     }
@@ -225,8 +229,14 @@
     source.connect(S.entry);
     source.onended = () => {
       if (S.source !== source) return;
+      if (S.scheduled) {
+        // Gapless handover. Don't wait for the timeout: a minimised webview throttles it.
+        const sch = S.scheduled;
+        clearTimeout(sch.timeout);
+        promote(sch.endCtx);
+        return;
+      }
       stopTimer();
-      if (S.scheduled) return; // gapless promotion takes over
       S.playing = false;
       emit({ ev: "ended" });
     };
@@ -250,7 +260,7 @@
     source.start(Math.max(endCtx, c.currentTime));
     const delay = Math.max(0, (endCtx - c.currentTime) * 1000);
     const timeout = setTimeout(() => promote(endCtx), delay);
-    S.scheduled = { source, timeout, key: n.key };
+    S.scheduled = { source, timeout, key: n.key, endCtx };
   }
 
   function promote(startCtxTime) {
@@ -262,12 +272,14 @@
     S.scheduled = null;
     S.next = null;
     S.startCtxTime = startCtxTime;
+    S.playing = true;
+    startTimer();
     setNorm(n.normDb);
     const source = sch.source;
     source.onended = () => {
       if (S.source !== source) return;
-      stopTimer();
       if (S.scheduled) return;
+      stopTimer();
       S.playing = false;
       emit({ ev: "ended" });
     };
